@@ -9,10 +9,6 @@ import SwiftUI
 
 struct ComponentsView: View {
   @Environment(\.colorScheme) var colorScheme
-    
-    var isDark: Bool {
-      colorScheme == .dark
-    }
   let manager: ObservableWebViewManager
   
   @State private var textFieldValue: String = ""
@@ -27,7 +23,7 @@ struct ComponentsView: View {
           .frame(width: geometry.size.width / 2)
         
         ScrollView {
-          VStack(alignment: .leading, spacing: 18) {
+          VStack(alignment: .leading, spacing: 16) {
             HStack {
               Text("SwiftUI")
                 .font(.system(size: 32, weight: .bold, design: .default))
@@ -36,7 +32,7 @@ struct ComponentsView: View {
             }
             Text("This is a native SwiftUI view")
               .font(.system(size: 12))
-              .padding(.bottom, 6)
+              .padding(.bottom, 10)
             
             ComponentSection(header: "Buttons") {
               HStack {
@@ -56,19 +52,20 @@ struct ComponentsView: View {
               PrimaryTextField(text: $textFieldValue)
             }
             
-            VStack(alignment: .leading, spacing: 8) {
-              Text("Dropdown")
-                .font(.system(size: 14, weight: .medium))
-                .padding(.bottom, 4)
-              Picker("", selection: .constant(1)) {
+            ComponentSection(header: "Dropdown") {
+              Picker("", selection: $pickerSelection) {
                 Text("Option 1").tag(1)
                 Text("Option 2").tag(2)
                 Text("Option 3").tag(3)
               }
               .pickerStyle(.menu)
-              .padding()
+              .padding(.horizontal)
+              .padding(.vertical, 10)
+              .frame(maxWidth: .infinity)
               .background(
-                Color.gray.opacity(0.2)
+                colorScheme == .dark
+                      ? Color(0x606463)
+                      : Color(0xEDEDED)
               )
               .cornerRadius(8)
               .shadow(radius: 1)
@@ -109,4 +106,16 @@ struct ComponentsView: View {
 
 #Preview("NavigationView") {
   BrowserView()
+}
+
+struct CustomPickerItem: View {
+  let text: String
+  let tag: Int
+  @Binding var selection: Int
+
+  var body: some View {
+    Text(text)
+      .tag(tag)
+      .foregroundColor(selection == tag ? .black : .primary)
+  }
 }

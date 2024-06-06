@@ -37,14 +37,17 @@ const SwiftComponents: FC = () => {
         <input
           type="text"
           className="mt-1 block w-full px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-[#EDEDED] dark:bg-[#606463] text-base"
-          style={{ height: '50px' }}
+          style={{ height: '52px' }}
         />
       </div>
 
       <div>
         <label className="block text-sm font-medium mb-1">Dropdown</label>
         <div className="relative">
-          <select className="block appearance-none w-full bg-white dark:bg-[#606463] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 px-4 py-2 pr-8 leading-tight">
+          <select
+            className="block appearance-none w-full bg-[#EDEDED] dark:bg-[#606463] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 px-4 py-2 pr-8 leading-tight text-base"
+            style={{ height: '52px' }}
+          >
             <option>Option 1</option>
             <option>Option 2</option>
             <option>Option 3</option>

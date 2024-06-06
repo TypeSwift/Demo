@@ -18,7 +18,7 @@ struct PrimaryTextField: View {
         RoundedRectangle(cornerRadius: 8)
           .fill(colorScheme == .dark 
                 ? Color(0x606463)
-                : Color.gray.opacity(0.1))
+                : Color(0xEDEDED))
           .shadow(radius: 1)
           .overlay(
             RoundedRectangle(cornerRadius: 8)
