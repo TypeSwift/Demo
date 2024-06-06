@@ -1,5 +1,5 @@
 'use client';
-import { FC, useState } from 'react';
+import { FC, useState, useEffect, ChangeEvent } from 'react';
 import DropdownMenu from '../../components/DropdownMenu';
 
 enum Device {
@@ -13,6 +13,16 @@ enum Device {
 const SplitComponentsView: FC = () => {
   const [total, setTotal] = useState(0);
   const [selectedDevice, setSelectedDevice] = useState<Device>();
+  const [textFieldValue, setTextFieldValue] = useState<string>('');
+  const [switchValue, setSwitchValue] = useState<boolean>(false);
+
+  useEffect(() => {
+    console.log('Total:', total);
+  }, [total]);
+
+  useEffect(() => {
+    console.log('Selected Device:', selectedDevice);
+  }, [selectedDevice]);
 
   const handleIncrement = () => {
     setTotal(total + 1);
@@ -24,6 +34,18 @@ const SplitComponentsView: FC = () => {
 
   const handleDeviceSelect = (device: Device) => {
     setSelectedDevice(device);
+  };
+
+  const handleTextFieldChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+    setTextFieldValue(newValue);
+    console.log('TextField Value:', newValue);
+  };
+
+  const handleSwitchChange = () => {
+    const newValue = !switchValue;
+    setSwitchValue(newValue);
+    console.log('Switch Value:', newValue);
   };
 
   return (
@@ -50,6 +72,8 @@ const SplitComponentsView: FC = () => {
         <label className="block text-sm font-medium mb-1">TextField</label>
         <input
           type="text"
+          value={textFieldValue}
+          onChange={handleTextFieldChange}
           placeholder="Type here..."
           className="mt-1 block w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-[#EDEDED] dark:bg-[#606463] text-base"
           style={{
@@ -68,7 +92,12 @@ const SplitComponentsView: FC = () => {
       <div>
         <label className="block text-sm font-medium mb-1">Switch</label>
         <label className="relative inline-flex items-center cursor-pointer group">
-          <input type="checkbox" className="sr-only peer" />
+          <input
+            type="checkbox"
+            className="sr-only peer"
+            checked={switchValue}
+            onChange={handleSwitchChange}
+          />
           <div className="w-[52px] h-[32px] bg-[#D7D7D5] rounded-full peer dark:bg-[#414544] peer-checked:bg-blue-600 peer-checked:border-[#4480EA] peer-checked:border-[0.5px] after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-[28px] after:w-[28px] after:transition-all peer-checked:after:translate-x-[20px] peer-checked:after:border-white peer-checked:after:bg-white shadow-inner dark:border-[#606261]"></div>
         </label>
       </div>
