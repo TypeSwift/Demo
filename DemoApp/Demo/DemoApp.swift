@@ -11,7 +11,9 @@ import SwiftUI
 struct DemoApp: App {
   var body: some Scene {
     WindowGroup {
-      ContentView()
+      WindowView()
+        .frame(minWidth: 675, idealWidth: 830, maxHeight: .infinity)
+        .frame(minHeight: 400, idealHeight: 540, maxHeight: .infinity)
     }
   }
 }
