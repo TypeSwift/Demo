@@ -6,14 +6,19 @@ import InputTextField from '../../components/inputs';
 import Switch from '../../components/switches';
 import ComponentSection from '../../components/sections';
 import useExpose from '../hooks/useExpose';
+import useExposeType from '../hooks/useExposeType';
 
-enum Device {
+export enum Device {
   Phone = 'Phone',
   Pad = 'Pad',
   Mac = 'Mac',
   TV = 'TV',
   Vision = 'Vision',
 }
+
+export const exposedTypes = {
+  Device,
+};
 
 declare global {
   interface Window {
@@ -62,6 +67,8 @@ const SplitComponentsView: FC = () => {
     setSwitchValue(newValue);
     console.log('Switch Value:', newValue);
   };
+
+  useExposeType(exposedTypes);
 
   useExpose(handleIncrement);
   useExpose(handleDecrement);
