@@ -1,10 +1,9 @@
 'use client';
 import { FC, useState, useEffect, ChangeEvent } from 'react';
-import DropdownMenu from '../../components/DropdownMenu';
-import BlueButton from '../../components/buttons/BlueButton';
-import RedButton from '../../components/buttons/RedButton';
-import InputTextField from '../../components/inputs/InputTextField';
-import Switch from '../../components/inputs/Switch';
+import DropdownMenu from '../../components/menus';
+import { BlueButton, RedButton } from '../../components/buttons';
+import InputTextField from '../../components/inputs';
+import Switch from '../../components/switches';
 import ComponentSection from '../../components/sections';
 
 enum Device {

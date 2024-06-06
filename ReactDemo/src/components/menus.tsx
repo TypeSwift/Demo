@@ -7,7 +7,7 @@ interface DropdownMenuProps {
   placeholder: string;
 }
 
-const DropdownMenu: FC<DropdownMenuProps> = ({
+export const DropdownMenu: FC<DropdownMenuProps> = ({
   options,
   onSelect,
   placeholder,
