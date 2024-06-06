@@ -1,6 +1,11 @@
 'use client';
 import { FC, useState, useEffect, ChangeEvent } from 'react';
 import DropdownMenu from '../../components/DropdownMenu';
+import BlueButton from '../../components/buttons/BlueButton';
+import RedButton from '../../components/buttons/RedButton';
+import InputTextField from '../../components/inputs/InputTextField';
+import Switch from '../../components/inputs/Switch';
+import ComponentSection from '../../components/sections';
 
 enum Device {
   Phone = 'Phone',
@@ -50,57 +55,29 @@ const SplitComponentsView: FC = () => {
 
   return (
     <div className="py-6 space-y-4">
-      <div>
-        <label className="block text-sm font-medium mb-1">Buttons</label>
+      <ComponentSection header="Buttons">
         <div className="flex items-center">
-          <button
-            onClick={handleIncrement}
-            className="px-4 py-2 font-medium text-white bg-blue-600 rounded-lg shadow hover:bg-blue-700 focus:outline-none"
-          >
-            +1
-          </button>
-          <button
-            onClick={handleDecrement}
-            className="ml-2 px-4 py-2 font-medium text-white bg-red-600 rounded-lg shadow hover:bg-red-700 focus:outline-none"
-          >
-            -1
-          </button>
+          <BlueButton onClick={handleIncrement}>+1</BlueButton>
+          <RedButton onClick={handleDecrement}>-1</RedButton>
           <span className="ml-4 text-sm font-medium">{total}</span>
         </div>
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-1">TextField</label>
-        <input
-          type="text"
+      </ComponentSection>
+      <ComponentSection header="TextField">
+        <InputTextField
           value={textFieldValue}
           onChange={handleTextFieldChange}
           placeholder="Type here..."
-          className="mt-1 block w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-[#EDEDED] dark:bg-[#606463] text-base"
-          style={{
-            height: '52px',
-            boxShadow: '0 1px 1px rgba(0, 0, 0, 0.5)',
-          }}
         />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-1">Dropdown</label>
+      </ComponentSection>
+      <ComponentSection header="Dropdown">
         <DeviceDropdown onSelect={handleDeviceSelect} />
         <label className="block text-sm font-medium mt-2">
           Selected: {selectedDevice ?? 'None'}
         </label>
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-1">Switch</label>
-        <label className="relative inline-flex items-center cursor-pointer group">
-          <input
-            type="checkbox"
-            className="sr-only peer"
-            checked={switchValue}
-            onChange={handleSwitchChange}
-          />
-          <div className="w-[52px] h-[32px] bg-[#D7D7D5] rounded-full peer dark:bg-[#414544] peer-checked:bg-blue-600 peer-checked:border-[#4480EA] peer-checked:border-[0.5px] after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-[28px] after:w-[28px] after:transition-all peer-checked:after:translate-x-[20px] peer-checked:after:border-white peer-checked:after:bg-white shadow-inner dark:border-[#606261]"></div>
-        </label>
-      </div>
+      </ComponentSection>
+      <ComponentSection header="Switch">
+        <Switch checked={switchValue} onChange={handleSwitchChange} />
+      </ComponentSection>
     </div>
   );
 };
