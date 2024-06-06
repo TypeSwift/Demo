@@ -26,6 +26,7 @@ extension ObservableWebView: NSViewRepresentable {
   func makeNSView(context: Context) -> WKWebView {
     let webView = manager.getWebView()
     webView.navigationDelegate = context.coordinator
+    webView.setValue(false, forKey: "drawsBackground")
     return webView
   }
   
@@ -36,6 +37,9 @@ extension ObservableWebView: UIViewRepresentable {
   func makeUIView(context: Context) -> WKWebView {
     let webView = manager.getWebView()
     webView.navigationDelegate = context.coordinator
+    webView.isOpaque = false
+    webView.backgroundColor = .clear
+    webView.scrollView.backgroundColor = .clear
     return webView
   }
   

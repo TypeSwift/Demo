@@ -22,13 +22,15 @@ struct ComponentsView: View {
           .frame(width: geometry.size.width / 2)
         
         ScrollView {
-          VStack(alignment: .leading, spacing: 16) { // Adjusted spacing for better layout
+          VStack(alignment: .leading, spacing: 18) {
             HStack {
-              Text("Components")
-                .font(.system(size: 36, weight: .bold, design: .default))
+              Text("SwiftUI")
+                .font(.system(size: 32, weight: .bold, design: .default))
+                .padding(.top, 6)
               Spacer()
             }
-            Text("This is a typical SwiftUI view")
+            Text("This is a native SwiftUI view")
+              .font(.system(size: 12))
             
             VStack(alignment: .leading, spacing: 8) {
               Text("Button")
@@ -56,7 +58,7 @@ struct ComponentsView: View {
             VStack(alignment: .leading, spacing: 8) {
               Text("Checkbox")
               Toggle(isOn: $checkboxValue) {
-                Text("Check me")
+                Text("")
               }
             }
             
