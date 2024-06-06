@@ -11,6 +11,7 @@
 		290EEF212C0CA57200DB2809 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 290EEF202C0CA57200DB2809 /* Assets.xcassets */; };
 		290EEF252C0CA57200DB2809 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 290EEF242C0CA57200DB2809 /* Preview Assets.xcassets */; };
 		2945041A2C1217C300A6000C /* ComponentsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294504192C1217C300A6000C /* ComponentsSection.swift */; };
+		2945041D2C121C5C00A6000C /* PrimaryTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2945041C2C121C5C00A6000C /* PrimaryTextField.swift */; };
 		29AFA5F62C1131E20074A0DC /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFA5F52C1131E20074A0DC /* Page.swift */; };
 		29AFA5F82C1132900074A0DC /* WindowProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFA5F72C1132900074A0DC /* WindowProperties.swift */; };
 		29AFA5FA2C1132A70074A0DC /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFA5F92C1132A70074A0DC /* Global.swift */; };
@@ -35,6 +36,7 @@
 		290EEF222C0CA57200DB2809 /* Demo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Demo.entitlements; sourceTree = "<group>"; };
 		290EEF242C0CA57200DB2809 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		294504192C1217C300A6000C /* ComponentsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentsSection.swift; sourceTree = "<group>"; };
+		2945041C2C121C5C00A6000C /* PrimaryTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryTextField.swift; sourceTree = "<group>"; };
 		29AFA5F52C1131E20074A0DC /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		29AFA5F72C1132900074A0DC /* WindowProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowProperties.swift; sourceTree = "<group>"; };
 		29AFA5F92C1132A70074A0DC /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
@@ -112,6 +114,14 @@
 			path = Pages;
 			sourceTree = "<group>";
 		};
+		2945041B2C121C4700A6000C /* TextFields */ = {
+			isa = PBXGroup;
+			children = (
+				2945041C2C121C5C00A6000C /* PrimaryTextField.swift */,
+			);
+			path = TextFields;
+			sourceTree = "<group>";
+		};
 		29AFA5F42C1131D60074A0DC /* Environments */ = {
 			isa = PBXGroup;
 			children = (
@@ -173,6 +183,7 @@
 		29AFA6142C120C120074A0DC /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				2945041B2C121C4700A6000C /* TextFields */,
 				29AFA6152C120C170074A0DC /* Buttons */,
 			);
 			path = Components;
@@ -278,6 +289,7 @@
 				290EEF1D2C0CA57200DB2809 /* DemoApp.swift in Sources */,
 				29AFA6132C11372E0074A0DC /* ComponentsView.swift in Sources */,
 				29AFA6102C1133F00074A0DC /* WebViewContainer.swift in Sources */,
+				2945041D2C121C5C00A6000C /* PrimaryTextField.swift in Sources */,
 				29AFA5F82C1132900074A0DC /* WindowProperties.swift in Sources */,
 				29AFA5FA2C1132A70074A0DC /* Global.swift in Sources */,
 				29AFA60E2C11335F0074A0DC /* ObservableWebViewManager.swift in Sources */,

@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct ComponentsView: View {
+  @Environment(\.colorScheme) var colorScheme
+    
+    var isDark: Bool {
+      colorScheme == .dark
+    }
   let manager: ObservableWebViewManager
   
   @State private var textFieldValue: String = ""
@@ -38,11 +43,9 @@ struct ComponentsView: View {
                 PrimaryButton("+1", foreground: .white, background: Color(0x2463EB)) {
                   print("add one")
                 }
-                
                 PrimaryButton("-1", foreground: .white, background: Color(0xDC2625)) {
                   print("minus one")
                 }
-                
                 Text("0")
                   .font(.system(size: 14, weight: .medium))
                   .padding(.leading, 10)
@@ -50,13 +53,7 @@ struct ComponentsView: View {
             }
             
             ComponentSection(header: "TextField") {
-              TextField("", text: .constant(""))
-                .padding()
-                .background(Color.gray.opacity(0.6))
-                .font(.system(size: 16))
-                .cornerRadius(8)
-                .shadow(radius: 1)
-                .textFieldStyle(.plain)
+              PrimaryTextField(text: $textFieldValue)
             }
             
             VStack(alignment: .leading, spacing: 8) {
@@ -70,7 +67,9 @@ struct ComponentsView: View {
               }
               .pickerStyle(.menu)
               .padding()
-              .background(Color.gray.opacity(0.2))
+              .background(
+                Color.gray.opacity(0.2)
+              )
               .cornerRadius(8)
               .shadow(radius: 1)
             }
@@ -87,7 +86,7 @@ struct ComponentsView: View {
               Toggle(isOn: $switchValue) {
                 Text("")
               }
-              .toggleStyle(SwitchToggleStyle()) // Ensure correct toggle style
+              .toggleStyle(SwitchToggleStyle())
             }
             
           }
