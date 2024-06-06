@@ -66,8 +66,8 @@ struct ComponentsView: View {
               .frame(height: 54)
               .background(
                 colorScheme == .dark
-                      ? Color(0x606463)
-                      : Color(0xEDEDED)
+                ? Color(0x606463)
+                : Color(0xEDEDED)
               )
               .cornerRadius(8)
               .shadow(color: Color.black.opacity(0.6), radius: 0.5, x: 0, y: 1)
@@ -77,10 +77,15 @@ struct ComponentsView: View {
               Toggle(isOn: $switchValue) {
                 EmptyView()
               }
+              .frame(width: 52, height: 36)
               .labelsHidden()
               .toggleStyle(.switch)
               .tint(.blue)
+#if os(macOS)
+              .scaleEffect(x: 1.4, y: 1.4, anchor: .center)
+#endif
             }
+            
             
           }
           .padding()

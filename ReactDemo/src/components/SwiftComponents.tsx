@@ -90,7 +90,7 @@ const SwiftComponents: FC = () => {
         <label className="block text-sm font-medium mb-1">Switch</label>
         <label className="relative inline-flex items-center cursor-pointer group">
           <input type="checkbox" className="sr-only peer" />
-          <div className="w-11 h-6 bg-[#D7D7D5] rounded-full peer dark:bg-[#414544] peer-checked:bg-blue-600 peer-checked:border-[#4480EA] peer-checked:border-[0.5px] after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full peer-checked:after:border-white peer-checked:after:bg-white shadow-inner dark:border-[#606261]"></div>
+          <div className="w-[52px] h-[32px] bg-[#D7D7D5] rounded-full peer dark:bg-[#414544] peer-checked:bg-blue-600 peer-checked:border-[#4480EA] peer-checked:border-[0.5px] after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-[28px] after:w-[28px] after:transition-all peer-checked:after:translate-x-[20px] peer-checked:after:border-white peer-checked:after:bg-white shadow-inner dark:border-[#606261]"></div>
         </label>
       </div>
     </div>
