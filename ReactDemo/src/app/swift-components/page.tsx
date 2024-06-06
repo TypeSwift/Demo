@@ -5,6 +5,7 @@ import { BlueButton, RedButton } from '../../components/buttons';
 import InputTextField from '../../components/inputs';
 import Switch from '../../components/switches';
 import ComponentSection from '../../components/sections';
+import useExpose from '../hooks/useExpose';
 
 enum Device {
   Phone = 'Phone',
@@ -12,6 +13,16 @@ enum Device {
   Mac = 'Mac',
   TV = 'TV',
   Vision = 'Vision',
+}
+
+declare global {
+  interface Window {
+    handleIncrement: () => void;
+    handleDecrement: () => void;
+    handleDeviceSelect: (device: Device) => void;
+    setTextFieldValue: (value: string) => void;
+    setSwitchValue: (value: boolean) => void;
+  }
 }
 
 const SplitComponentsView: FC = () => {
@@ -51,6 +62,12 @@ const SplitComponentsView: FC = () => {
     setSwitchValue(newValue);
     console.log('Switch Value:', newValue);
   };
+
+  useExpose(handleIncrement);
+  useExpose(handleDecrement);
+  useExpose(handleDeviceSelect);
+  useExpose(setTextFieldValue);
+  useExpose(setSwitchValue);
 
   return (
     <div className="py-6 space-y-4">
