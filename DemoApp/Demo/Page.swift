@@ -33,9 +33,21 @@ enum Page: String, Identifiable, CaseIterable {
     }
   }
   
+  var route: String {
+    switch self {
+    case .components: "swift-components"
+    }
+  }
+  
+  var url: String {
+    "http://localhost:3000".appending("/").appending(self.route)
+  }
+  
+  /*
   var url: String {
     switch self {
     case .components: "http://localhost:3000"
     }
   }
+  */
 }

@@ -5,7 +5,7 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'React Demo',
+  title: 'TypeSwift React Demo',
   description: 'Showcasing the power of TypeSwift',
 };
 
