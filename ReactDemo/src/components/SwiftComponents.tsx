@@ -19,13 +19,13 @@ const SwiftComponents: FC = () => {
         <div className="flex items-center">
           <button
             onClick={handleIncrement}
-            className="px-4 py-2 text-white bg-blue-600 rounded-lg shadow hover:bg-blue-700 focus:outline-none"
+            className="px-4 py-2 font-medium text-white bg-blue-600 rounded-lg shadow hover:bg-blue-700 focus:outline-none"
           >
             +1
           </button>
           <button
             onClick={handleDecrement}
-            className="ml-2 px-4 py-2 text-white bg-red-600 rounded-lg shadow hover:bg-red-700 focus:outline-none"
+            className="ml-2 px-4 py-2 font-medium text-white bg-red-600 rounded-lg shadow hover:bg-red-700 focus:outline-none"
           >
             -1
           </button>
@@ -36,8 +36,12 @@ const SwiftComponents: FC = () => {
         <label className="block text-sm font-medium mb-1">TextField</label>
         <input
           type="text"
-          className="mt-1 block w-full px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-[#EDEDED] dark:bg-[#606463] text-base"
-          style={{ height: '52px' }}
+          placeholder="Type here..."
+          className="mt-1 block w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-[#EDEDED] dark:bg-[#606463] text-base"
+          style={{
+            height: '52px',
+            boxShadow: '0 1px 1px rgba(0, 0, 0, 0.5)',
+          }}
         />
       </div>
 
@@ -45,8 +49,11 @@ const SwiftComponents: FC = () => {
         <label className="block text-sm font-medium mb-1">Dropdown</label>
         <div className="relative">
           <select
-            className="block appearance-none w-full bg-[#EDEDED] dark:bg-[#606463] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 px-4 py-2 pr-8 leading-tight text-base"
-            style={{ height: '52px' }}
+            className="block appearance-none w-full bg-[#EDEDED] dark:bg-[#606463] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 px-4 py-2 pr-8 leading-tight text-base"
+            style={{
+              height: '52px',
+              boxShadow: '0 1px 1px rgba(0, 0, 0, 0.5)',
+            }}
           >
             <option>Option 1</option>
             <option>Option 2</option>
@@ -54,22 +61,31 @@ const SwiftComponents: FC = () => {
           </select>
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
             <svg
-              className="fill-current h-4 w-4"
+              version="1.1"
               xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
+              width="16"
+              height="16"
+              viewBox="0 0 30.8496 44.6777"
             >
-              <path d="M7 10l5 5 5-5H7z" />
+              <g>
+                <rect
+                  height="44.6777"
+                  opacity="0"
+                  width="30.8496"
+                  x="0"
+                  y="0"
+                />
+                <path
+                  fill="currentColor"
+                  fill-opacity="1"
+                  d="M15.3223 0C14.6484 0 14.0625 0.263672 13.5645 0.761719L0.673828 13.0664C0.292969 13.4766 0 14.0039 0 14.7949C0 16.1719 1.05469 17.2266 2.43164 17.2266C2.98828 17.2266 3.60352 17.0801 4.16016 16.5234L15.3223 5.5957L26.4551 16.5234C27.0117 17.0508 27.6562 17.2266 28.2129 17.2266C29.5898 17.2266 30.6152 16.1719 30.6152 14.7949C30.6152 14.0039 30.3516 13.4766 29.9414 13.0664L17.0801 0.761719C16.5527 0.263672 15.9668 0 15.3223 0ZM15.3223 44.6484C15.9668 44.6484 16.5527 44.3848 17.0801 43.8867L29.9414 31.582C30.3516 31.1719 30.6152 30.6445 30.6152 29.8535C30.6152 28.4766 29.5898 27.4219 28.2129 27.4219C27.6562 27.4219 27.0117 27.5977 26.4551 28.125L15.3223 39.0527L4.16016 28.125C3.60352 27.5684 2.98828 27.4219 2.43164 27.4219C1.05469 27.4219 0 28.4766 0 29.8535C0 30.6445 0.292969 31.1719 0.673828 31.582L13.5645 43.8867C14.0625 44.3848 14.6484 44.6484 15.3223 44.6484Z"
+                />
+              </g>
             </svg>
           </div>
         </div>
       </div>
-      <div>
-        <label className="block text-sm font-medium mb-1">Checkbox</label>
-        <input
-          type="checkbox"
-          className="h-4 w-4 border-gray-300 rounded dark:bg-[#595D5C]"
-        />
-      </div>
+
       <div>
         <label className="block text-sm font-medium mb-1">Switch</label>
         <label className="relative inline-flex items-center cursor-pointer group">

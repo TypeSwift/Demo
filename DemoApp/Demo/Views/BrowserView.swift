@@ -38,7 +38,9 @@ struct BrowserView: View {
       NavigationStack {
         if let selectedItem = viewModel.selectedItem {
           destinationView(for: selectedItem)
+          #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
+          #endif
         } else {
           Text("Select a page")
         }

@@ -36,10 +36,10 @@ struct ComponentsView: View {
             
             ComponentSection(header: "Buttons") {
               HStack {
-                PrimaryButton("+1", foreground: .white, background: Color(0x2463EB)) {
+                PrimaryButton("+1", foreground: .white, background: .blue) {
                   print("add one")
                 }
-                PrimaryButton("-1", foreground: .white, background: Color(0xDC2625)) {
+                PrimaryButton("-1", foreground: .white, background: .red) {
                   print("minus one")
                 }
                 Text("0")
@@ -58,32 +58,28 @@ struct ComponentsView: View {
                 Text("Option 2").tag(2)
                 Text("Option 3").tag(3)
               }
+              .controlSize(.extraLarge)
               .pickerStyle(.menu)
               .padding(.horizontal)
               .padding(.vertical, 10)
               .frame(maxWidth: .infinity)
+              .frame(height: 54)
               .background(
                 colorScheme == .dark
                       ? Color(0x606463)
                       : Color(0xEDEDED)
               )
               .cornerRadius(8)
-              .shadow(radius: 1)
+              .shadow(color: Color.black.opacity(0.6), radius: 0.5, x: 0, y: 1)
             }
             
-            VStack(alignment: .leading, spacing: 8) {
-              Text("Checkbox")
-              Toggle(isOn: $checkboxValue) {
-                Text("")
-              }
-            }
-            
-            VStack(alignment: .leading, spacing: 8) {
-              Text("Switch")
+            ComponentSection(header: "Switch") {
               Toggle(isOn: $switchValue) {
-                Text("")
+                EmptyView()
               }
-              .toggleStyle(SwitchToggleStyle())
+              .labelsHidden()
+              .toggleStyle(.switch)
+              .tint(.blue)
             }
             
           }
@@ -99,23 +95,14 @@ struct ComponentsView: View {
 #Preview {
   let manager = ObservableWebViewManager(urlString: Page.components.url)
   return ComponentsView(manager: manager)
-  #if os(macOS)
+#if os(macOS)
     .frame(height: 600)
-  #endif
+#endif
 }
 
 #Preview("NavigationView") {
   BrowserView()
-}
-
-struct CustomPickerItem: View {
-  let text: String
-  let tag: Int
-  @Binding var selection: Int
-
-  var body: some View {
-    Text(text)
-      .tag(tag)
-      .foregroundColor(selection == tag ? .black : .primary)
-  }
+#if os(macOS)
+    .frame(height: 600)
+#endif
 }
