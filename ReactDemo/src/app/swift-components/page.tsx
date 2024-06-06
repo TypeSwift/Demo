@@ -16,8 +16,18 @@ export enum Device {
   Vision = 'Vision',
 }
 
+export type OperatingSystemType = keyof typeof OperatingSystems;
+const OperatingSystems = {
+  iOS: 'iOS',
+  iPadOS: 'iPadOS',
+  macOS: 'macOS',
+  tvOS: 'tvOS',
+  visionOS: 'visionOS',
+} as const;
+
 export const exposedTypes = {
   Device,
+  OperatingSystems,
 };
 
 declare global {
@@ -33,6 +43,7 @@ declare global {
 const SplitComponentsView: FC = () => {
   const [total, setTotal] = useState(0);
   const [selectedDevice, setSelectedDevice] = useState<Device>();
+  const [selectedOS, setSelectedOS] = useState<OperatingSystemType>();
   const [textFieldValue, setTextFieldValue] = useState<string>('');
   const [switchValue, setSwitchValue] = useState<boolean>(false);
 
@@ -44,6 +55,10 @@ const SplitComponentsView: FC = () => {
     console.log('Selected Device:', selectedDevice);
   }, [selectedDevice]);
 
+  useEffect(() => {
+    console.log('Selected OS:', selectedOS);
+  }, [selectedOS]);
+
   const handleIncrement = () => {
     setTotal(total + 1);
   };
@@ -54,6 +69,10 @@ const SplitComponentsView: FC = () => {
 
   const handleDeviceSelect = (device: Device) => {
     setSelectedDevice(device);
+  };
+
+  const handleOSSelect = (os: OperatingSystemType) => {
+    setSelectedOS(os);
   };
 
   const handleTextFieldChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -97,6 +116,7 @@ const SplitComponentsView: FC = () => {
         <label className="block text-sm font-medium mt-2">
           Selected: {selectedDevice ?? 'None'}
         </label>
+        <OperatingSystemDropdown onSelect={handleOSSelect} />
       </ComponentSection>
       <ComponentSection header="Switch">
         <Switch checked={switchValue} onChange={handleSwitchChange} />
@@ -117,6 +137,22 @@ const DeviceDropdown: FC<{ onSelect: (device: Device) => void }> = ({
       options={Object.values(Device)}
       onSelect={handleSelect}
       placeholder="Device"
+    />
+  );
+};
+
+const OperatingSystemDropdown: FC<{
+  onSelect: (os: OperatingSystemType) => void;
+}> = ({ onSelect }) => {
+  const handleSelect = (value: string) => {
+    onSelect(value as OperatingSystemType);
+  };
+
+  return (
+    <DropdownMenu
+      options={Object.values(OperatingSystems)}
+      onSelect={handleSelect}
+      placeholder="OS"
     />
   );
 };
