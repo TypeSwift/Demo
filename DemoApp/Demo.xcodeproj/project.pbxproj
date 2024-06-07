@@ -27,6 +27,12 @@
 		29AFA6132C11372E0074A0DC /* ComponentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFA6122C11372E0074A0DC /* ComponentsView.swift */; };
 		29AFA6172C120C260074A0DC /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFA6162C120C260074A0DC /* PrimaryButton.swift */; };
 		29AFA61B2C1212270074A0DC /* HexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFA61A2C1212270074A0DC /* HexColor.swift */; };
+		29B1D6D72C13627D00CAF1AA /* TypeSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B1D6D42C13627D00CAF1AA /* TypeSwift.swift */; };
+		29B1D6D82C13627D00CAF1AA /* WKExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B1D6D52C13627D00CAF1AA /* WKExtensions.swift */; };
+		29B1D6DA2C136B7400CAF1AA /* EnumDropdownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B1D6D92C136B7400CAF1AA /* EnumDropdownMenu.swift */; };
+		29B1D6DD2C136C9F00CAF1AA /* MonoSubheader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B1D6DC2C136C9F00CAF1AA /* MonoSubheader.swift */; };
+		29B1D6DF2C136D2000CAF1AA /* LargeSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B1D6DE2C136D2000CAF1AA /* LargeSwitch.swift */; };
+		29B1D6E12C136E9900CAF1AA /* LargeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B1D6E02C136E9900CAF1AA /* LargeHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +58,12 @@
 		29AFA6122C11372E0074A0DC /* ComponentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentsView.swift; sourceTree = "<group>"; };
 		29AFA6162C120C260074A0DC /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
 		29AFA61A2C1212270074A0DC /* HexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColor.swift; sourceTree = "<group>"; };
+		29B1D6D42C13627D00CAF1AA /* TypeSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeSwift.swift; sourceTree = "<group>"; };
+		29B1D6D52C13627D00CAF1AA /* WKExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKExtensions.swift; sourceTree = "<group>"; };
+		29B1D6D92C136B7400CAF1AA /* EnumDropdownMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumDropdownMenu.swift; sourceTree = "<group>"; };
+		29B1D6DC2C136C9F00CAF1AA /* MonoSubheader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonoSubheader.swift; sourceTree = "<group>"; };
+		29B1D6DE2C136D2000CAF1AA /* LargeSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeSwitch.swift; sourceTree = "<group>"; };
+		29B1D6E02C136E9900CAF1AA /* LargeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeHeader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				290EEF1C2C0CA57200DB2809 /* DemoApp.swift */,
+				29B1D6D62C13627D00CAF1AA /* TypeSwift */,
 				29AFA5F42C1131D60074A0DC /* Environments */,
 				29AFA5F52C1131E20074A0DC /* Page.swift */,
 				29AFA5FB2C1132CD0074A0DC /* WindowView.swift */,
@@ -183,8 +196,11 @@
 		29AFA6142C120C120074A0DC /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				29B1D6DB2C136C8500CAF1AA /* TextStyles */,
 				2945041B2C121C4700A6000C /* TextFields */,
 				29AFA6152C120C170074A0DC /* Buttons */,
+				29B1D6D92C136B7400CAF1AA /* EnumDropdownMenu.swift */,
+				29B1D6DE2C136D2000CAF1AA /* LargeSwitch.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -211,6 +227,24 @@
 				29AFA61A2C1212270074A0DC /* HexColor.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		29B1D6D62C13627D00CAF1AA /* TypeSwift */ = {
+			isa = PBXGroup;
+			children = (
+				29B1D6D42C13627D00CAF1AA /* TypeSwift.swift */,
+				29B1D6D52C13627D00CAF1AA /* WKExtensions.swift */,
+			);
+			path = TypeSwift;
+			sourceTree = "<group>";
+		};
+		29B1D6DB2C136C8500CAF1AA /* TextStyles */ = {
+			isa = PBXGroup;
+			children = (
+				29B1D6DC2C136C9F00CAF1AA /* MonoSubheader.swift */,
+				29B1D6E02C136E9900CAF1AA /* LargeHeader.swift */,
+			);
+			path = TextStyles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -285,16 +319,22 @@
 			files = (
 				29AFA5FC2C1132CD0074A0DC /* WindowView.swift in Sources */,
 				29AFA60D2C11335F0074A0DC /* ObservableWebViewLoadState.swift in Sources */,
+				29B1D6DA2C136B7400CAF1AA /* EnumDropdownMenu.swift in Sources */,
 				29AFA5FF2C1132E90074A0DC /* BrowserView.swift in Sources */,
+				29B1D6D82C13627D00CAF1AA /* WKExtensions.swift in Sources */,
 				290EEF1D2C0CA57200DB2809 /* DemoApp.swift in Sources */,
+				29B1D6DD2C136C9F00CAF1AA /* MonoSubheader.swift in Sources */,
 				29AFA6132C11372E0074A0DC /* ComponentsView.swift in Sources */,
+				29B1D6E12C136E9900CAF1AA /* LargeHeader.swift in Sources */,
 				29AFA6102C1133F00074A0DC /* WebViewContainer.swift in Sources */,
 				2945041D2C121C5C00A6000C /* PrimaryTextField.swift in Sources */,
+				29B1D6DF2C136D2000CAF1AA /* LargeSwitch.swift in Sources */,
 				29AFA5F82C1132900074A0DC /* WindowProperties.swift in Sources */,
 				29AFA5FA2C1132A70074A0DC /* Global.swift in Sources */,
 				29AFA60E2C11335F0074A0DC /* ObservableWebViewManager.swift in Sources */,
 				29AFA60A2C11335F0074A0DC /* Delay.swift in Sources */,
 				29AFA6092C11335F0074A0DC /* ObservableScriptMessageHandlerModifier.swift in Sources */,
+				29B1D6D72C13627D00CAF1AA /* TypeSwift.swift in Sources */,
 				29AFA60B2C11335F0074A0DC /* ObservableWebView.swift in Sources */,
 				29AFA6172C120C260074A0DC /* PrimaryButton.swift in Sources */,
 				29AFA61B2C1212270074A0DC /* HexColor.swift in Sources */,
