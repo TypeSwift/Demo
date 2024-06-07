@@ -102,27 +102,7 @@ struct TypeSafeScriptMessageHandlerModifier: ViewModifier {
 }
 
 extension View {
-  func typeScriptMessageHandler(_ handlerType: TypeSwift.MessageHandlers, manager: ObservableWebViewManager) -> some View {
+  func tsMessageHandler(_ handlerType: TypeSwift.MessageHandlers, manager: ObservableWebViewManager) -> some View {
     self.modifier(TypeSafeScriptMessageHandlerModifier(handlerType: handlerType, manager: manager))
   }
 }
-
-/*
- extension TypeSwift {
-   enum Device: String, CaseIterable {
-     case Phone = "Phone"
-     case Pad = "Pad"
-     case Mac = "Mac"
-     case TV = "TV"
-     case Vision = "Vision"
-   }
-
-   enum OperatingSystem: String, CaseIterable {
-     case iOS = "iOS"
-     case iPadOS = "iPadOS"
-     case macOS = "macOS"
-     case tvOS = "tvOS"
-     case visionOS = "visionOS"
-   }
- }
- */

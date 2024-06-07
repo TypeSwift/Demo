@@ -21,13 +21,10 @@ struct ComponentsView: View {
       HStack(spacing: 0) {
         ObservableWebView(manager: manager)
           .frame(width: geometry.size.width / 2)
-          .typeScriptMessageHandler(.updateTotal { newValue in
+          .tsMessageHandler(.updateTotal { newValue in
             total = newValue
           }, manager: manager)
-          .typeScriptMessageHandler(.updateTextField { newValue in
-            textFieldValue = newValue
-          }, manager: manager)
-          .typeScriptMessageHandler(.updateTextField { newValue in
+          .tsMessageHandler(.updateTextField { newValue in
             textFieldValue = newValue
           }, manager: manager)
         /*
