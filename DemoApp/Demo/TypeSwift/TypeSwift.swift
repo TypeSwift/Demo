@@ -20,16 +20,11 @@ enum TypeSwift {
   
   var jsString: String {
     switch self {
-    case .updateTotal(let value):
-      return "updateTotal(\(value))"
-    case .updateDeviceDropdown(let device):
-      return "updateDeviceDropdown(Device.\(device))"
-    case .updateOSDropdown(let os):
-      return "updateOSDropdown(OperatingSystems.\(os))"
-    case .updateTextField(let text):
-      return "updateTextField(`\(text)`)"
-    case .updateSwitch(let state):
-      return "updateSwitch(\(state))"
+    case .updateTotal(let value): return "updateTotal(\(value))"
+    case .updateDeviceDropdown(let device): return "updateDeviceDropdown(Device.\(device))"
+    case .updateOSDropdown(let os): return "updateOSDropdown(OperatingSystems.\(os))"
+    case .updateTextField(let text): return "updateTextField(`\(text)`)"
+    case .updateSwitch(let state): return "updateSwitch(\(state))"
     }
   }
 }
