@@ -8,85 +8,80 @@
 import SwiftUI
 
 struct ComponentsView: View {
-  @Environment(\.colorScheme) var colorScheme
   let manager: ObservableWebViewManager
   
   @State private var textFieldValue: String = ""
-  @State private var pickerSelection: Int = 1
-  @State private var checkboxValue: Bool = true
+  @State private var total: Double = 0
+  @State private var selectedDevice: TypeSwift.Device = .Phone
+  @State private var selectedOS: TypeSwift.OperatingSystems = .iOS
   @State private var switchValue: Bool = true
   
   var body: some View {
     GeometryReader { geometry in
       HStack(spacing: 0) {
-        WebViewContainer(manager: manager)
+        ObservableWebView(manager: manager)
           .frame(width: geometry.size.width / 2)
+          .tsMessageHandler(.updateTotal { newValue in
+            total = newValue
+          }, manager: manager)
+          .tsMessageHandler(.updateTextField { newValue in
+            textFieldValue = newValue
+          }, manager: manager)
+          .tsMessageHandler(.updateDeviceDropdown { newValue in
+            selectedDevice = newValue
+          }, manager: manager)
+          .tsMessageHandler(.updateOSDropdown { newValue in
+            selectedOS = newValue
+          }, manager: manager)
+          .tsMessageHandler(.updateSwitch { newValue in
+            switchValue = newValue
+          }, manager: manager)
         
         ScrollView {
           VStack(alignment: .leading, spacing: 16) {
-            HStack {
-              Text("SwiftUI")
-                .font(.system(size: 32, weight: .bold, design: .default))
-                .padding(.top, 6)
-              Spacer()
-            }
-            Text("This is a native SwiftUI view")
-              .font(.system(size: 12))
-              .padding(.bottom, 10)
+            LargeHeader("SwiftUI", tagline: "This is a SwiftUI view")
             
             ComponentSection(header: "Buttons") {
               HStack {
                 PrimaryButton("+1", foreground: .white, background: .blue) {
-                  print("add one")
+                  manager.ts(.updateTotal(total + 1))
                 }
                 PrimaryButton("-1", foreground: .white, background: .red) {
-                  print("minus one")
+                  manager.ts(.updateTotal(total - 1))
                 }
-                Text("0")
+                Text("\(total, specifier: "%.0f")")
                   .font(.system(size: 14, weight: .medium))
-                  .padding(.leading, 10)
               }
             }
             
             ComponentSection(header: "TextField") {
               PrimaryTextField(text: $textFieldValue)
+                .onChange(of: textFieldValue) {
+                  manager.ts(.updateTextField(textFieldValue))
+                }
             }
             
             ComponentSection(header: "Dropdown") {
-              Picker("", selection: $pickerSelection) {
-                Text("Option 1").tag(1)
-                Text("Option 2").tag(2)
-                Text("Option 3").tag(3)
+              VStack(alignment: .leading, spacing: 0) {
+                MonoSubheader("enum")
+                EnumDropdownMenu(selection: $selectedDevice)
+                  .onChange(of: selectedDevice) {
+                    manager.ts(.updateDeviceDropdown(selectedDevice))
+                  }
+                MonoSubheader("const")
+                EnumDropdownMenu(selection: $selectedOS)
+                  .onChange(of: selectedOS) {
+                    manager.ts(.updateOSDropdown(selectedOS))
+                  }
               }
-              .controlSize(.extraLarge)
-              .pickerStyle(.menu)
-              .padding(.horizontal)
-              .padding(.vertical, 10)
-              .frame(maxWidth: .infinity)
-              .frame(height: 54)
-              .background(
-                colorScheme == .dark
-                ? Color(0x606463)
-                : Color(0xEDEDED)
-              )
-              .cornerRadius(8)
-              .shadow(color: Color.black.opacity(0.6), radius: 0.5, x: 0, y: 1)
             }
             
             ComponentSection(header: "Switch") {
-              Toggle(isOn: $switchValue) {
-                EmptyView()
-              }
-              .frame(width: 52, height: 36)
-              .labelsHidden()
-              .toggleStyle(.switch)
-              .tint(.blue)
-#if os(macOS)
-              .scaleEffect(x: 1.4, y: 1.4, anchor: .center)
-#endif
+              LargeSwitch(state: $switchValue)
+                .onChange(of: switchValue) {
+                  manager.ts(.updateSwitch(switchValue))
+                }
             }
-            
-            
           }
           .padding()
           .frame(width: geometry.size.width / 2)
