@@ -44,11 +44,18 @@ const SplitComponentsView: FC = () => {
 
   useEffect(() => {
     console.log('Selected Device:', selectedDevice);
+    if (selectedDevice) {
+      postDeviceDropdown(selectedDevice);
+    }
   }, [selectedDevice]);
 
   useEffect(() => {
     console.log('Selected OS:', selectedOS);
   }, [selectedOS]);
+
+  useEffect(() => {
+    postSwitch(switchValue);
+  }, [switchValue]);
 
   const postTotal = (value: number) => {
     if (
@@ -74,6 +81,43 @@ const SplitComponentsView: FC = () => {
     }
   };
 
+  const postDeviceDropdown = (value: Device) => {
+    if (
+      window.webkit &&
+      window.webkit.messageHandlers &&
+      window.webkit.messageHandlers.updateDeviceDropdown
+    ) {
+      window.webkit.messageHandlers.updateDeviceDropdown.postMessage(
+        JSON.stringify(value)
+      );
+    } else {
+      console.warn("Message handler 'updateDeviceDropdown' is not available.");
+    }
+  };
+  const postOSDropdown = (value: OperatingSystemType) => {
+    if (
+      window.webkit &&
+      window.webkit.messageHandlers &&
+      window.webkit.messageHandlers.updateOSDropdown
+    ) {
+      window.webkit.messageHandlers.updateOSDropdown.postMessage(value);
+    } else {
+      console.warn("Message handler 'updateOSDropdown' is not available.");
+    }
+  };
+
+  const postSwitch = (value: boolean) => {
+    if (
+      window.webkit &&
+      window.webkit.messageHandlers &&
+      window.webkit.messageHandlers.updateSwitch
+    ) {
+      window.webkit.messageHandlers.updateSwitch.postMessage(value);
+    } else {
+      console.warn("Message handler 'updateSwitch' is not available.");
+    }
+  };
+
   const handleIncrement = () => {
     updateTotal(total + 1);
   };
@@ -84,6 +128,7 @@ const SplitComponentsView: FC = () => {
 
   const handleDeviceSelect = (device: Device) => {
     setSelectedDevice(device);
+    postDeviceDropdown(device);
   };
 
   const handleOSSelect = (os: OperatingSystemType) => {
@@ -111,18 +156,22 @@ const SplitComponentsView: FC = () => {
 
   const updateDeviceDropdown = (device: Device) => {
     handleDeviceSelect(device);
+    postDeviceDropdown(device);
   };
 
   const updateOSDropdown = (os: OperatingSystemType) => {
     handleOSSelect(os);
+    postOSDropdown(os);
   };
 
   const updateTextField = (text: string) => {
     setTextFieldValue(text);
+    postTextField(text);
   };
 
   const updateSwitch = (state: boolean) => {
     setSwitchValue(state);
+    postSwitch(state);
   };
 
   useExposeType(exposedTypes);

@@ -22,27 +22,25 @@ struct ComponentsView: View {
         ObservableWebView(manager: manager)
           .frame(width: geometry.size.width / 2)
           .tsMessageHandler(.updateTotal { newValue in
+            print(newValue)
             total = newValue
           }, manager: manager)
           .tsMessageHandler(.updateTextField { newValue in
+            print(newValue)
             textFieldValue = newValue
           }, manager: manager)
-        /*
-          .scriptMessageHandler("updateTotal", manager: manager) { message in
-            if let newTotal = message.body as? Double {
-              total = newTotal
-            }
-          }
-          .scriptMessageHandler("updateTextField", manager: manager) { message in
-            if let newValue = message.body as? String {
-              textFieldValue = newValue
-            }
-          }
-         */
+          .tsMessageHandler(.updateDeviceDropdown { newValue in
+            print(newValue)
+            selectedDevice = newValue
+          }, manager: manager)
+          .tsMessageHandler(.updateSwitch { newValue in
+            print(newValue)
+            switchValue = newValue
+          }, manager: manager)
         
         ScrollView {
           VStack(alignment: .leading, spacing: 16) {
-            LargeHeader("SwiftUI", tagline: "This is a native SwiftUI view")
+            LargeHeader("SwiftUI", tagline: "This is a SwiftUI view")
             
             ComponentSection(header: "Buttons") {
               HStack {

@@ -9,7 +9,7 @@ export interface ComponentHandlers {
     postMessage: (value: Device) => void;
   };
   updateOSDropdown: {
-    postMessage: (value: OperatingSystems) => void;
+    postMessage: (value: OperatingSystemType) => void;
   };
   updateSwitch: {
     postMessage: (value: boolean) => void;

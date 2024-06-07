@@ -28,6 +28,8 @@ struct LargeHeader: View {
         Text(tagline)
           .font(.system(size: 12))
           .padding(.bottom, 10)
+          .lineLimit(1)
+          .truncationMode(.tail)
         Spacer()
       }
     }

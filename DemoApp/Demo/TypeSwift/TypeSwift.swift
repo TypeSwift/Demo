@@ -35,11 +35,11 @@ enum TypeSwift {
 }
 
 extension TypeSwift {
-  enum Device: String, CaseIterable {
+  enum Device: String, CaseIterable, Codable {
     case Phone, Pad, Mac, TV, Vision
   }
-
-  enum OperatingSystems: String, CaseIterable {
+  
+  enum OperatingSystems: String, CaseIterable, Codable {
     case iOS, iPadOS, macOS, tvOS, visionOS
   }
 }
@@ -75,11 +75,14 @@ extension TypeSwift {
           callback(text)
         }
       case .updateDeviceDropdown(let callback):
-        if let device = message.body as? Device {
+        if let deviceData = message.body as? String,
+           let data = deviceData.data(using: .utf8),
+           let device = try? JSONDecoder().decode(Device.self, from: data) {
           callback(device)
         }
       case .updateOSDropdown(let callback):
-        if let os = message.body as? OperatingSystems {
+        if let osData = message.body as? String,
+           let os = OperatingSystems(rawValue: osData) {
           callback(os)
         }
       case .updateSwitch(let callback):

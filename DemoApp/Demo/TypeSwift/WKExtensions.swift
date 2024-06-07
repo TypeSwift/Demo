@@ -33,6 +33,9 @@ extension WKWebView {
   func ts(_ identifier: TypeSwift) {
     self.evaluateJavaScript(identifier.jsString, completionHandler: nil)
   }
+  func ts(_ identifier: TypeSwift, completionHandler: ((Any?, Error?) -> Void)? = nil) {
+    self.evaluateJavaScript(identifier.jsString, completionHandler: completionHandler)
+  }
 }
 
 extension ObservableWebViewManager {
@@ -57,5 +60,8 @@ extension ObservableWebViewManager {
   /// ```
   func ts(_ identifier: TypeSwift) {
     self.webView.evaluateJavaScript(identifier.jsString, completionHandler: nil)
+  }
+  func ts(_ identifier: TypeSwift, completionHandler: ((Any?, Error?) -> Void)? = nil) {
+    self.webView.evaluateJavaScript(identifier.jsString, completionHandler: completionHandler)
   }
 }
