@@ -5,8 +5,8 @@ import { BlueButton, RedButton } from '../../components/buttons';
 import InputTextField from '../../components/inputs';
 import Switch from '../../components/switches';
 import ComponentSection from '../../components/sections';
-import useExpose from '../hooks/useExpose';
-import useExposeType from '../hooks/useExposeType';
+import useExpose from '../../hooks/useExpose';
+import useExposeType from '../../hooks/useExposeType';
 
 export enum Device {
   Phone = 'Phone',
