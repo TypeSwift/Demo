@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground: 37, 37, 36;
+  --background: transparent;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground: 223, 223, 223;
+    --background: transparent;
+  }
+}
+
+body {
+  color: rgb(var(--foreground));
+  background: rgb(var(--background));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.shadow-inner {
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.05), inset 1px 0 2px rgba(0, 0, 0, 0.05),
+    inset -1px 0 2px rgba(0, 0, 0, 0.05);
+}
+
+.icon {
+  fill: rgb(var(--foreground));
+  color: rgb(var(--foreground));
+}
+
+@media (prefers-color-scheme: dark) {
+  .icon {
+    fill: rgb(var(--foreground));
+  }
+}
+
+/* Disabled
+.input-gradient-border {
+  border-top: 0.5px solid transparent;
+  border-bottom: 1px solid transparent;
+  background-image: linear-gradient(white, white),
+    linear-gradient(to bottom, #dddddb, #b7b7b6);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+.dark .input-gradient-border {
+  background-image: linear-gradient(#363a39, #363a39),
+    linear-gradient(to bottom, #464a49, #616565);
+}
+*/
