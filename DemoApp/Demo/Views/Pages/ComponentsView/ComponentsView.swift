@@ -33,6 +33,10 @@ struct ComponentsView: View {
             print(newValue)
             selectedDevice = newValue
           }, manager: manager)
+          .tsMessageHandler(.updateOSDropdown { newValue in
+            print(newValue)
+            selectedOS = newValue
+          }, manager: manager)
           .tsMessageHandler(.updateSwitch { newValue in
             print(newValue)
             switchValue = newValue

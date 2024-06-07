@@ -51,6 +51,9 @@ const SplitComponentsView: FC = () => {
 
   useEffect(() => {
     console.log('Selected OS:', selectedOS);
+    if (selectedOS) {
+      postOSDropdown(selectedOS);
+    }
   }, [selectedOS]);
 
   useEffect(() => {
