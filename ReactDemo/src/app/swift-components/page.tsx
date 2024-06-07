@@ -7,6 +7,7 @@ import Switch from '../../components/switches';
 import ComponentSection from '../../components/sections';
 import useExpose from '../../hooks/useExpose';
 import useExposeType from '../../hooks/useExposeType';
+import { handlers } from '@/utils/handlers';
 
 export enum Device {
   Phone = 'Phone',
@@ -38,16 +39,47 @@ const SplitComponentsView: FC = () => {
   const [switchValue, setSwitchValue] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log('Total:', total);
+    postTotal(total);
   }, [total]);
 
   useEffect(() => {
-    console.log('Selected Device:', selectedDevice);
+    if (selectedDevice) {
+      postDeviceDropdown(selectedDevice);
+    }
   }, [selectedDevice]);
 
   useEffect(() => {
-    console.log('Selected OS:', selectedOS);
+    if (selectedOS) {
+      postOSDropdown(selectedOS);
+    }
   }, [selectedOS]);
+
+  useEffect(() => {
+    postSwitch(switchValue);
+  }, [switchValue]);
+
+  const postTotal = (value: number) => {
+    if (handlers.updateTotal) {
+      handlers.updateTotal.postMessage(value);
+    }
+  };
+
+  const postTextField = (value: string) => {
+    handlers.updateTextField.postMessage(value);
+  };
+
+  const postDeviceDropdown = (value: Device) => {
+    handlers.updateDeviceDropdown.postMessage(JSON.stringify(value));
+  };
+  const postOSDropdown = (value: OperatingSystemType) => {
+    handlers.updateOSDropdown.postMessage(value);
+  };
+
+  const postSwitch = (value: boolean) => {
+    if (handlers.updateSwitch) {
+      handlers.updateSwitch.postMessage(value);
+    }
+  };
 
   const handleIncrement = () => {
     updateTotal(total + 1);
@@ -59,22 +91,23 @@ const SplitComponentsView: FC = () => {
 
   const handleDeviceSelect = (device: Device) => {
     setSelectedDevice(device);
+    postDeviceDropdown(device);
   };
 
   const handleOSSelect = (os: OperatingSystemType) => {
     setSelectedOS(os);
+    postOSDropdown(os);
   };
 
   const handleTextFieldChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
     setTextFieldValue(newValue);
-    console.log('TextField Value:', newValue);
+    postTextField(newValue);
   };
 
   const handleSwitchChange = () => {
     const newValue = !switchValue;
     setSwitchValue(newValue);
-    console.log('Switch Value:', newValue);
   };
 
   // Exposed Functions
@@ -84,18 +117,22 @@ const SplitComponentsView: FC = () => {
 
   const updateDeviceDropdown = (device: Device) => {
     handleDeviceSelect(device);
+    postDeviceDropdown(device);
   };
 
   const updateOSDropdown = (os: OperatingSystemType) => {
     handleOSSelect(os);
+    postOSDropdown(os);
   };
 
   const updateTextField = (text: string) => {
     setTextFieldValue(text);
+    postTextField(text);
   };
 
   const updateSwitch = (state: boolean) => {
     setSwitchValue(state);
+    postSwitch(state);
   };
 
   useExposeType(exposedTypes);

@@ -21,10 +21,25 @@ struct ComponentsView: View {
       HStack(spacing: 0) {
         ObservableWebView(manager: manager)
           .frame(width: geometry.size.width / 2)
+          .tsMessageHandler(.updateTotal { newValue in
+            total = newValue
+          }, manager: manager)
+          .tsMessageHandler(.updateTextField { newValue in
+            textFieldValue = newValue
+          }, manager: manager)
+          .tsMessageHandler(.updateDeviceDropdown { newValue in
+            selectedDevice = newValue
+          }, manager: manager)
+          .tsMessageHandler(.updateOSDropdown { newValue in
+            selectedOS = newValue
+          }, manager: manager)
+          .tsMessageHandler(.updateSwitch { newValue in
+            switchValue = newValue
+          }, manager: manager)
         
         ScrollView {
           VStack(alignment: .leading, spacing: 16) {
-            LargeHeader("SwiftUI", tagline: "This is a native SwiftUI view")
+            LargeHeader("SwiftUI", tagline: "This is a SwiftUI view")
             
             ComponentSection(header: "Buttons") {
               HStack {

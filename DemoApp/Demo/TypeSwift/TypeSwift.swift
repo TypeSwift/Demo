@@ -20,46 +20,71 @@ enum TypeSwift {
   
   var jsString: String {
     switch self {
-    case .updateTotal(let value):
-      return "updateTotal(\(value))"
-    case .updateDeviceDropdown(let device):
-      return "updateDeviceDropdown(Device.\(device))"
-    case .updateOSDropdown(let os):
-      return "updateOSDropdown(OperatingSystems.\(os))"
-    case .updateTextField(let text):
-      return "updateTextField(`\(text)`)"
-    case .updateSwitch(let state):
-      return "updateSwitch(\(state))"
+    case .updateTotal(let value): return "updateTotal(\(value))"
+    case .updateDeviceDropdown(let device): return "updateDeviceDropdown(Device.\(device))"
+    case .updateOSDropdown(let os): return "updateOSDropdown(OperatingSystems.\(os))"
+    case .updateTextField(let text): return "updateTextField(`\(text)`)"
+    case .updateSwitch(let state): return "updateSwitch(\(state))"
     }
   }
 }
 
 extension TypeSwift {
-  enum Device: String, CaseIterable {
+  enum Device: String, CaseIterable, Codable {
     case Phone, Pad, Mac, TV, Vision
   }
-
-  enum OperatingSystems: String, CaseIterable {
+  
+  enum OperatingSystems: String, CaseIterable, Codable {
     case iOS, iPadOS, macOS, tvOS, visionOS
   }
 }
 
-/*
- extension TypeSwift {
-   enum Device: String, CaseIterable {
-     case Phone = "Phone"
-     case Pad = "Pad"
-     case Mac = "Mac"
-     case TV = "TV"
-     case Vision = "Vision"
-   }
+import WebKit
 
-   enum OperatingSystem: String, CaseIterable {
-     case iOS = "iOS"
-     case iPadOS = "iPadOS"
-     case macOS = "macOS"
-     case tvOS = "tvOS"
-     case visionOS = "visionOS"
-   }
- }
- */
+extension TypeSwift {
+  enum MessageHandlers {
+    case updateTotal((Double) -> Void)
+    case updateTextField((String) -> Void)
+    case updateDeviceDropdown((Device) -> Void)
+    case updateOSDropdown((OperatingSystems) -> Void)
+    case updateSwitch((Bool) -> Void)
+    
+    var name: String {
+      switch self {
+      case .updateTotal: return "updateTotal"
+      case .updateTextField: return "updateTextField"
+      case .updateDeviceDropdown: return "updateDeviceDropdown"
+      case .updateOSDropdown: return "updateOSDropdown"
+      case .updateSwitch: return "updateSwitch"
+      }
+    }
+    
+    func handle(message: WKScriptMessage) {
+      switch self {
+      case .updateTotal(let callback):
+        if let value = message.body as? Double {
+          callback(value)
+        }
+      case .updateTextField(let callback):
+        if let text = message.body as? String {
+          callback(text)
+        }
+      case .updateDeviceDropdown(let callback):
+        if let deviceData = message.body as? String,
+           let data = deviceData.data(using: .utf8),
+           let device = try? JSONDecoder().decode(Device.self, from: data) {
+          callback(device)
+        }
+      case .updateOSDropdown(let callback):
+        if let osData = message.body as? String,
+           let os = OperatingSystems(rawValue: osData) {
+          callback(os)
+        }
+      case .updateSwitch(let callback):
+        if let switchValue = message.body as? Bool {
+          callback(switchValue)
+        }
+      }
+    }
+  }
+}
