@@ -44,6 +44,69 @@ extension TypeSwift {
   }
 }
 
+import WebKit
+
+extension TypeSwift {
+  enum MessageHandlers {
+    case updateTotal((_ value: Double) -> Void)
+    case updateTextField((_ text: String) -> Void)
+    
+    var name: String {
+      switch self {
+      case .updateTotal:
+        return "updateTotal"
+      case .updateTextField:
+        return "updateTextField"
+      }
+    }
+    
+    func handle(message: WKScriptMessage) {
+      switch self {
+      case .updateTotal(let callback):
+        if let value = message.body as? Double {
+          callback(value)
+        }
+      case .updateTextField(let callback):
+        if let text = message.body as? String {
+          callback(text)
+        }
+      }
+    }
+  }
+}
+
+
+protocol MessageHandlerProtocol {
+  associatedtype ValueType
+  var name: String { get }
+  func handle(_ value: ValueType)
+}
+
+import SwiftUI
+
+struct TypeSafeScriptMessageHandlerModifier: ViewModifier {
+  let handlerType: TypeSwift.MessageHandlers
+  var manager: ObservableWebViewManager
+  
+  func body(content: Content) -> some View {
+    content
+      .onAppear {
+        let handler: (WKScriptMessage) -> Void = { message in
+          handlerType.handle(message: message)
+        }
+        
+        manager.removeScriptMessageHandler(forName: handlerType.name)
+        manager.addScriptMessageHandler(ObservableScriptMessageHandler(handler: handler), forName: handlerType.name)
+      }
+  }
+}
+
+extension View {
+  func typeScriptMessageHandler(_ handlerType: TypeSwift.MessageHandlers, manager: ObservableWebViewManager) -> some View {
+    self.modifier(TypeSafeScriptMessageHandlerModifier(handlerType: handlerType, manager: manager))
+  }
+}
+
 /*
  extension TypeSwift {
    enum Device: String, CaseIterable {
