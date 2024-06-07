@@ -20,15 +20,13 @@ struct ObservableScriptMessageHandlerModifier: ViewModifier {
   func body(content: Content) -> some View {
     content
       .onAppear {
-        manager.addScriptMessageHandler(ObservableScriptMessageHandler(handler: handler), forName: name)
-      }
-      .onDisappear {
         manager.removeScriptMessageHandler(forName: name)
+        manager.addScriptMessageHandler(ObservableScriptMessageHandler(handler: handler), forName: name)
       }
   }
 }
 
-private class ObservableScriptMessageHandler: NSObject, WKScriptMessageHandler, ScriptMessageHandler {
+class ObservableScriptMessageHandler: NSObject, WKScriptMessageHandler, ScriptMessageHandler {
   let handler: (WKScriptMessage) -> Void
   
   init(handler: @escaping (WKScriptMessage) -> Void) {

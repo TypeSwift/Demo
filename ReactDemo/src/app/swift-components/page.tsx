@@ -1,12 +1,13 @@
 'use client';
-import { FC, useState, useEffect, ChangeEvent } from 'react';
+import { FC, useState, useEffect, ChangeEvent, use } from 'react';
 import DropdownMenu from '../../components/menus';
 import { BlueButton, RedButton } from '../../components/buttons';
 import InputTextField from '../../components/inputs';
 import Switch from '../../components/switches';
 import ComponentSection from '../../components/sections';
-import useExpose from '../hooks/useExpose';
-import useExposeType from '../hooks/useExposeType';
+import useExpose from '../../hooks/useExpose';
+import useExposeType from '../../hooks/useExposeType';
+import { handlers } from '@/utils/handlers';
 
 export enum Device {
   Phone = 'Phone',
@@ -30,16 +31,6 @@ export const exposedTypes = {
   OperatingSystems,
 };
 
-declare global {
-  interface Window {
-    handleIncrement: () => void;
-    handleDecrement: () => void;
-    handleDeviceSelect: (device: Device) => void;
-    setTextFieldValue: (value: string) => void;
-    setSwitchValue: (value: boolean) => void;
-  }
-}
-
 const SplitComponentsView: FC = () => {
   const [total, setTotal] = useState(0);
   const [selectedDevice, setSelectedDevice] = useState<Device>();
@@ -48,52 +39,109 @@ const SplitComponentsView: FC = () => {
   const [switchValue, setSwitchValue] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log('Total:', total);
+    postTotal(total);
   }, [total]);
 
   useEffect(() => {
-    console.log('Selected Device:', selectedDevice);
+    if (selectedDevice) {
+      postDeviceDropdown(selectedDevice);
+    }
   }, [selectedDevice]);
 
   useEffect(() => {
-    console.log('Selected OS:', selectedOS);
+    if (selectedOS) {
+      postOSDropdown(selectedOS);
+    }
   }, [selectedOS]);
 
+  useEffect(() => {
+    postSwitch(switchValue);
+  }, [switchValue]);
+
+  const postTotal = (value: number) => {
+    if (handlers.updateTotal) {
+      handlers.updateTotal.postMessage(value);
+    }
+  };
+
+  const postTextField = (value: string) => {
+    handlers.updateTextField.postMessage(value);
+  };
+
+  const postDeviceDropdown = (value: Device) => {
+    handlers.updateDeviceDropdown.postMessage(JSON.stringify(value));
+  };
+  const postOSDropdown = (value: OperatingSystemType) => {
+    handlers.updateOSDropdown.postMessage(value);
+  };
+
+  const postSwitch = (value: boolean) => {
+    if (handlers.updateSwitch) {
+      handlers.updateSwitch.postMessage(value);
+    }
+  };
+
   const handleIncrement = () => {
-    setTotal(total + 1);
+    updateTotal(total + 1);
   };
 
   const handleDecrement = () => {
-    setTotal(total - 1);
+    updateTotal(total - 1);
   };
 
   const handleDeviceSelect = (device: Device) => {
     setSelectedDevice(device);
+    postDeviceDropdown(device);
   };
 
   const handleOSSelect = (os: OperatingSystemType) => {
     setSelectedOS(os);
+    postOSDropdown(os);
   };
 
   const handleTextFieldChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
     setTextFieldValue(newValue);
-    console.log('TextField Value:', newValue);
+    postTextField(newValue);
   };
 
   const handleSwitchChange = () => {
     const newValue = !switchValue;
     setSwitchValue(newValue);
-    console.log('Switch Value:', newValue);
+  };
+
+  // Exposed Functions
+  const updateTotal = (value: number) => {
+    setTotal(value);
+  };
+
+  const updateDeviceDropdown = (device: Device) => {
+    handleDeviceSelect(device);
+    postDeviceDropdown(device);
+  };
+
+  const updateOSDropdown = (os: OperatingSystemType) => {
+    handleOSSelect(os);
+    postOSDropdown(os);
+  };
+
+  const updateTextField = (text: string) => {
+    setTextFieldValue(text);
+    postTextField(text);
+  };
+
+  const updateSwitch = (state: boolean) => {
+    setSwitchValue(state);
+    postSwitch(state);
   };
 
   useExposeType(exposedTypes);
 
-  useExpose(handleIncrement);
-  useExpose(handleDecrement);
-  useExpose(handleDeviceSelect);
-  useExpose(setTextFieldValue);
-  useExpose(setSwitchValue);
+  useExpose(updateTotal);
+  useExpose(updateDeviceDropdown);
+  useExpose(updateOSDropdown);
+  useExpose(updateTextField);
+  useExpose(updateSwitch);
 
   return (
     <div className="py-6 space-y-4">
@@ -112,11 +160,14 @@ const SplitComponentsView: FC = () => {
         />
       </ComponentSection>
       <ComponentSection header="Dropdown">
-        <DeviceDropdown onSelect={handleDeviceSelect} />
-        <label className="block text-sm font-medium mt-2">
-          Selected: {selectedDevice ?? 'None'}
+        <label className="block text-sm font-medium mt-2 text-left font-mono">
+          enum
         </label>
-        <OperatingSystemDropdown onSelect={handleOSSelect} />
+        <DeviceDropdown value={selectedDevice} onSelect={handleDeviceSelect} />
+        <label className="block text-sm font-medium mt-2 text-left font-mono">
+          const
+        </label>
+        <OperatingSystemDropdown value={selectedOS} onSelect={handleOSSelect} />
       </ComponentSection>
       <ComponentSection header="Switch">
         <Switch checked={switchValue} onChange={handleSwitchChange} />
@@ -125,15 +176,17 @@ const SplitComponentsView: FC = () => {
   );
 };
 
-const DeviceDropdown: FC<{ onSelect: (device: Device) => void }> = ({
-  onSelect,
-}) => {
-  const handleSelect = (value: string) => {
-    onSelect(value as Device);
+const DeviceDropdown: FC<{
+  value?: Device;
+  onSelect: (device: Device) => void;
+}> = ({ value, onSelect }) => {
+  const handleSelect = (selectedValue: string) => {
+    onSelect(selectedValue as Device);
   };
 
   return (
     <DropdownMenu
+      value={value}
       options={Object.values(Device)}
       onSelect={handleSelect}
       placeholder="Device"
@@ -142,14 +195,16 @@ const DeviceDropdown: FC<{ onSelect: (device: Device) => void }> = ({
 };
 
 const OperatingSystemDropdown: FC<{
+  value?: OperatingSystemType;
   onSelect: (os: OperatingSystemType) => void;
-}> = ({ onSelect }) => {
-  const handleSelect = (value: string) => {
-    onSelect(value as OperatingSystemType);
+}> = ({ value, onSelect }) => {
+  const handleSelect = (selectedValue: string) => {
+    onSelect(selectedValue as OperatingSystemType);
   };
 
   return (
     <DropdownMenu
+      value={value}
       options={Object.values(OperatingSystems)}
       onSelect={handleSelect}
       placeholder="OS"

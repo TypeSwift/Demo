@@ -1,17 +1,17 @@
 export interface ComponentHandlers {
-  userLoggedIn: {
-    sendMessage: (data: { userId: number; timestamp: string }) => void;
+  updateTotal: {
+    postMessage: (value: number) => void;
   };
-  userLoggedOut: {
-    notify: (status: boolean) => void;
+  updateTextField: {
+    postMessage: (value: string) => void;
   };
-  cartUpdated: {
-    updateCart: (items: { itemId: number; quantity: number }[]) => void;
+  updateDeviceDropdown: {
+    postMessage: (value: Device) => void;
   };
-  notificationReceived: {
-    alertUser: (notification: { title: string; body: string }) => void;
+  updateOSDropdown: {
+    postMessage: (value: OperatingSystemType) => void;
   };
-  customMessageHandler: {
-    sendObjectToSwiftApp: (data: { key: string; value: any }) => void;
+  updateSwitch: {
+    postMessage: (value: boolean) => void;
   };
 }
