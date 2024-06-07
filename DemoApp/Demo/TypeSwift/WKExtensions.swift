@@ -59,4 +59,3 @@ extension ObservableWebViewManager {
     self.webView.evaluateJavaScript(identifier.jsString, completionHandler: nil)
   }
 }
-

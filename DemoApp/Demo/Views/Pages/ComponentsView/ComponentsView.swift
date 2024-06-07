@@ -8,22 +8,18 @@
 import SwiftUI
 
 struct ComponentsView: View {
-  @Environment(\.colorScheme) var colorScheme
   let manager: ObservableWebViewManager
   
   @State private var textFieldValue: String = ""
-  @State private var pickerSelection: Int = 1
-  @State private var checkboxValue: Bool = true
-  @State private var switchValue: Bool = true
-  
   @State private var total: Double = 0
-  @State private var selectedDevice: TypeSwift.Device = .Phone //? = nil
-  @State private var selectedOS: TypeSwift.OperatingSystem = .iOS
+  @State private var selectedDevice: TypeSwift.Device = .Phone
+  @State private var selectedOS: TypeSwift.OperatingSystems = .iOS
+  @State private var switchValue: Bool = true
   
   var body: some View {
     GeometryReader { geometry in
       HStack(spacing: 0) {
-        WebViewContainer(manager: manager)
+        ObservableWebView(manager: manager)
           .frame(width: geometry.size.width / 2)
         
         ScrollView {
@@ -33,14 +29,12 @@ struct ComponentsView: View {
             ComponentSection(header: "Buttons") {
               HStack {
                 PrimaryButton("+1", foreground: .white, background: .blue) {
-                  // TODO: total + 1
-                  manager.ts(.updateTotal(1))
+                  manager.ts(.updateTotal(total + 1))
                 }
                 PrimaryButton("-1", foreground: .white, background: .red) {
-                  // TODO: total - 1
-                  manager.ts(.updateTotal(-1))
+                  manager.ts(.updateTotal(total - 1))
                 }
-                Text("0")
+                Text("\(total, specifier: "%.0f")")
                   .font(.system(size: 14, weight: .medium))
               }
             }
@@ -69,6 +63,9 @@ struct ComponentsView: View {
             
             ComponentSection(header: "Switch") {
               LargeSwitch(state: $switchValue)
+                .onChange(of: switchValue) {
+                  manager.ts(.updateSwitch(switchValue))
+                }
             }
           }
           .padding()

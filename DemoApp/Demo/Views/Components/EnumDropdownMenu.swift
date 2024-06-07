@@ -38,7 +38,7 @@ struct EnumDropdownMenu<EnumType>: View where EnumType: RawRepresentable, EnumTy
 
 #Preview {
   @State var selectedDevice: TypeSwift.Device = .Mac
-  @State var selectedOS: TypeSwift.OperatingSystem = .macOS
+  @State var selectedOS: TypeSwift.OperatingSystems = .macOS
   
   return VStack {
     EnumDropdownMenu(selection: $selectedDevice)

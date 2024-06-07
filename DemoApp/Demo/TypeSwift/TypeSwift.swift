@@ -14,7 +14,7 @@ enum TypeSwift {
   // Functions
   case updateTotal(_ value: Double)
   case updateDeviceDropdown(_ device: Device)
-  case updateOSDropdown(_ os: OperatingSystem)
+  case updateOSDropdown(_ os: OperatingSystems)
   case updateTextField(_ text: String)
   case updateSwitch(_ state: Bool)
   
@@ -25,14 +25,13 @@ enum TypeSwift {
     case .updateDeviceDropdown(let device):
       return "updateDeviceDropdown(Device.\(device))"
     case .updateOSDropdown(let os):
-      return "updateOSDropdown(\(os))"
+      return "updateOSDropdown(OperatingSystems.\(os))"
     case .updateTextField(let text):
       return "updateTextField(`\(text)`)"
     case .updateSwitch(let state):
-      return "updateState(\(state))"
+      return "updateSwitch(\(state))"
     }
   }
-  
 }
 
 extension TypeSwift {
@@ -40,7 +39,7 @@ extension TypeSwift {
     case Phone, Pad, Mac, TV, Vision
   }
 
-  enum OperatingSystem: String, CaseIterable {
+  enum OperatingSystems: String, CaseIterable {
     case iOS, iPadOS, macOS, tvOS, visionOS
   }
 }
