@@ -21,6 +21,27 @@ struct ComponentsView: View {
       HStack(spacing: 0) {
         ObservableWebView(manager: manager)
           .frame(width: geometry.size.width / 2)
+          .typeScriptMessageHandler(.updateTotal { newValue in
+            total = newValue
+          }, manager: manager)
+          .typeScriptMessageHandler(.updateTextField { newValue in
+            textFieldValue = newValue
+          }, manager: manager)
+          .typeScriptMessageHandler(.updateTextField { newValue in
+            textFieldValue = newValue
+          }, manager: manager)
+        /*
+          .scriptMessageHandler("updateTotal", manager: manager) { message in
+            if let newTotal = message.body as? Double {
+              total = newTotal
+            }
+          }
+          .scriptMessageHandler("updateTextField", manager: manager) { message in
+            if let newValue = message.body as? String {
+              textFieldValue = newValue
+            }
+          }
+         */
         
         ScrollView {
           VStack(alignment: .leading, spacing: 16) {
