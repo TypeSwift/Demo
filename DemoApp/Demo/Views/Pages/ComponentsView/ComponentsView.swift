@@ -22,23 +22,18 @@ struct ComponentsView: View {
         ObservableWebView(manager: manager)
           .frame(width: geometry.size.width / 2)
           .tsMessageHandler(.updateTotal { newValue in
-            print(newValue)
             total = newValue
           }, manager: manager)
           .tsMessageHandler(.updateTextField { newValue in
-            print(newValue)
             textFieldValue = newValue
           }, manager: manager)
           .tsMessageHandler(.updateDeviceDropdown { newValue in
-            print(newValue)
             selectedDevice = newValue
           }, manager: manager)
           .tsMessageHandler(.updateOSDropdown { newValue in
-            print(newValue)
             selectedOS = newValue
           }, manager: manager)
           .tsMessageHandler(.updateSwitch { newValue in
-            print(newValue)
             switchValue = newValue
           }, manager: manager)
         
