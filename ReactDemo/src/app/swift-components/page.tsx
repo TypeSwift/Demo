@@ -58,64 +58,22 @@ const SplitComponentsView: FC = () => {
   }, [switchValue]);
 
   const postTotal = (value: number) => {
-    if (
-      window.webkit &&
-      window.webkit.messageHandlers &&
-      window.webkit.messageHandlers.updateTotal
-    ) {
-      window.webkit.messageHandlers.updateTotal.postMessage(value);
-    } else {
-      console.warn("Message handler 'updateTotal' is not available.");
-    }
+    handlers.updateTotal.postMessage(value);
   };
 
   const postTextField = (value: string) => {
-    if (
-      window.webkit &&
-      window.webkit.messageHandlers &&
-      window.webkit.messageHandlers.updateTextField
-    ) {
-      window.webkit.messageHandlers.updateTextField.postMessage(value);
-    } else {
-      console.warn("Message handler 'updateTextField' is not available.");
-    }
+    handlers.updateTextField.postMessage(value);
   };
 
   const postDeviceDropdown = (value: Device) => {
-    if (
-      window.webkit &&
-      window.webkit.messageHandlers &&
-      window.webkit.messageHandlers.updateDeviceDropdown
-    ) {
-      window.webkit.messageHandlers.updateDeviceDropdown.postMessage(
-        JSON.stringify(value)
-      );
-    } else {
-      console.warn("Message handler 'updateDeviceDropdown' is not available.");
-    }
+    handlers.updateDeviceDropdown.postMessage(value);
   };
   const postOSDropdown = (value: OperatingSystemType) => {
-    if (
-      window.webkit &&
-      window.webkit.messageHandlers &&
-      window.webkit.messageHandlers.updateOSDropdown
-    ) {
-      window.webkit.messageHandlers.updateOSDropdown.postMessage(value);
-    } else {
-      console.warn("Message handler 'updateOSDropdown' is not available.");
-    }
+    handlers.updateOSDropdown.postMessage(value);
   };
 
   const postSwitch = (value: boolean) => {
-    if (
-      window.webkit &&
-      window.webkit.messageHandlers &&
-      window.webkit.messageHandlers.updateSwitch
-    ) {
-      window.webkit.messageHandlers.updateSwitch.postMessage(value);
-    } else {
-      console.warn("Message handler 'updateSwitch' is not available.");
-    }
+    handlers.updateSwitch.postMessage(value);
   };
 
   const handleIncrement = () => {
