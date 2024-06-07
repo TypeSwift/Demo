@@ -39,18 +39,16 @@ const SplitComponentsView: FC = () => {
   const [switchValue, setSwitchValue] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log('Total:', total);
+    postTotal(total);
   }, [total]);
 
   useEffect(() => {
-    console.log('Selected Device:', selectedDevice);
     if (selectedDevice) {
       postDeviceDropdown(selectedDevice);
     }
   }, [selectedDevice]);
 
   useEffect(() => {
-    console.log('Selected OS:', selectedOS);
     if (selectedOS) {
       postOSDropdown(selectedOS);
     }
@@ -61,7 +59,9 @@ const SplitComponentsView: FC = () => {
   }, [switchValue]);
 
   const postTotal = (value: number) => {
-    handlers.updateTotal.postMessage(value);
+    if (handlers.updateTotal) {
+      handlers.updateTotal.postMessage(value);
+    }
   };
 
   const postTextField = (value: string) => {
@@ -69,14 +69,16 @@ const SplitComponentsView: FC = () => {
   };
 
   const postDeviceDropdown = (value: Device) => {
-    handlers.updateDeviceDropdown.postMessage(value);
+    handlers.updateDeviceDropdown.postMessage(JSON.stringify(value));
   };
   const postOSDropdown = (value: OperatingSystemType) => {
     handlers.updateOSDropdown.postMessage(value);
   };
 
   const postSwitch = (value: boolean) => {
-    handlers.updateSwitch.postMessage(value);
+    if (handlers.updateSwitch) {
+      handlers.updateSwitch.postMessage(value);
+    }
   };
 
   const handleIncrement = () => {
@@ -94,25 +96,23 @@ const SplitComponentsView: FC = () => {
 
   const handleOSSelect = (os: OperatingSystemType) => {
     setSelectedOS(os);
+    postOSDropdown(os);
   };
 
   const handleTextFieldChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
     setTextFieldValue(newValue);
     postTextField(newValue);
-    console.log('TextField Value:', newValue);
   };
 
   const handleSwitchChange = () => {
     const newValue = !switchValue;
     setSwitchValue(newValue);
-    console.log('Switch Value:', newValue);
   };
 
   // Exposed Functions
   const updateTotal = (value: number) => {
     setTotal(value);
-    postTotal(value);
   };
 
   const updateDeviceDropdown = (device: Device) => {
