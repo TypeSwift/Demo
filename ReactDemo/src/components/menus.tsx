@@ -1,29 +1,28 @@
 'use client';
-import { FC, useState, ChangeEvent } from 'react';
+import { FC, ChangeEvent } from 'react';
 
 interface DropdownMenuProps {
   options: string[];
+  value?: string;
   onSelect: (value: string) => void;
   placeholder: string;
 }
 
 export const DropdownMenu: FC<DropdownMenuProps> = ({
   options,
+  value,
   onSelect,
   placeholder,
 }) => {
-  const [selectedOption, setSelectedOption] = useState<string>();
-
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value;
-    setSelectedOption(selectedValue);
     onSelect(selectedValue);
   };
 
   return (
     <div className="relative">
       <select
-        value={selectedOption ?? ''}
+        value={value ?? ''}
         onChange={handleChange}
         className="block appearance-none w-full bg-[#EDEDED] dark:bg-[#606463] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 px-4 py-2 pr-8 leading-tight text-base"
         style={{
