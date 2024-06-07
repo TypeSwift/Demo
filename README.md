@@ -11,4 +11,25 @@ Going from a TypeScript codebase to a native Swift app using TypeSwift
 
 ## Demonstration
 
-https://github.com/TypeSwift/Demo/assets/158503966/b073fb3e-97bf-437c-9d8d-543199ab8c9c
+https://github.com/TypeSwift/Demo/assets/158503966/766e5101-d4ba-486f-acaa-31587a7c5be4
+
+## Getting Started
+
+1. Setup the Node environment
+
+```bash
+cd ReactDemo
+```
+
+```bash
+npm i
+npm run dev
+```
+
+2. Open DemoApp
+
+```
+DemoApp/Demo.xcodeproj
+```
+
+3. Build and run locally
