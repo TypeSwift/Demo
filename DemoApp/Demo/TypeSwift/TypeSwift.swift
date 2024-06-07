@@ -48,15 +48,19 @@ import WebKit
 
 extension TypeSwift {
   enum MessageHandlers {
-    case updateTotal((_ value: Double) -> Void)
-    case updateTextField((_ text: String) -> Void)
+    case updateTotal((Double) -> Void)
+    case updateTextField((String) -> Void)
+    case updateDeviceDropdown((Device) -> Void)
+    case updateOSDropdown((OperatingSystems) -> Void)
+    case updateSwitch((Bool) -> Void)
     
     var name: String {
       switch self {
-      case .updateTotal:
-        return "updateTotal"
-      case .updateTextField:
-        return "updateTextField"
+      case .updateTotal: return "updateTotal"
+      case .updateTextField: return "updateTextField"
+      case .updateDeviceDropdown: return "updateDeviceDropdown"
+      case .updateOSDropdown: return "updateOSDropdown"
+      case .updateSwitch: return "updateSwitch"
       }
     }
     
@@ -69,6 +73,18 @@ extension TypeSwift {
       case .updateTextField(let callback):
         if let text = message.body as? String {
           callback(text)
+        }
+      case .updateDeviceDropdown(let callback):
+        if let device = message.body as? Device {
+          callback(device)
+        }
+      case .updateOSDropdown(let callback):
+        if let os = message.body as? OperatingSystems {
+          callback(os)
+        }
+      case .updateSwitch(let callback):
+        if let switchValue = message.body as? Bool {
+          callback(switchValue)
         }
       }
     }
@@ -91,12 +107,10 @@ struct TypeSafeScriptMessageHandlerModifier: ViewModifier {
   func body(content: Content) -> some View {
     content
       .onAppear {
-        let handler: (WKScriptMessage) -> Void = { message in
-          handlerType.handle(message: message)
-        }
-        
         manager.removeScriptMessageHandler(forName: handlerType.name)
-        manager.addScriptMessageHandler(ObservableScriptMessageHandler(handler: handler), forName: handlerType.name)
+        manager.addScriptMessageHandler(ObservableScriptMessageHandler(handler: { message in
+          handlerType.handle(message: message)
+        }), forName: handlerType.name)
       }
   }
 }
