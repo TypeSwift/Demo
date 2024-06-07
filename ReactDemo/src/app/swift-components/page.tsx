@@ -7,6 +7,7 @@ import Switch from '../../components/switches';
 import ComponentSection from '../../components/sections';
 import useExpose from '../../hooks/useExpose';
 import useExposeType from '../../hooks/useExposeType';
+import { handlers } from '@/utils/handlers';
 
 export enum Device {
   Phone = 'Phone',
@@ -49,6 +50,30 @@ const SplitComponentsView: FC = () => {
     console.log('Selected OS:', selectedOS);
   }, [selectedOS]);
 
+  const postTotal = (value: number) => {
+    if (
+      window.webkit &&
+      window.webkit.messageHandlers &&
+      window.webkit.messageHandlers.updateTotal
+    ) {
+      window.webkit.messageHandlers.updateTotal.postMessage(value);
+    } else {
+      console.warn("Message handler 'updateTotal' is not available.");
+    }
+  };
+
+  const postTextField = (value: string) => {
+    if (
+      window.webkit &&
+      window.webkit.messageHandlers &&
+      window.webkit.messageHandlers.updateTextField
+    ) {
+      window.webkit.messageHandlers.updateTextField.postMessage(value);
+    } else {
+      console.warn("Message handler 'updateTextField' is not available.");
+    }
+  };
+
   const handleIncrement = () => {
     updateTotal(total + 1);
   };
@@ -68,6 +93,7 @@ const SplitComponentsView: FC = () => {
   const handleTextFieldChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
     setTextFieldValue(newValue);
+    postTextField(newValue);
     console.log('TextField Value:', newValue);
   };
 
@@ -80,6 +106,7 @@ const SplitComponentsView: FC = () => {
   // Exposed Functions
   const updateTotal = (value: number) => {
     setTotal(value);
+    postTotal(value);
   };
 
   const updateDeviceDropdown = (device: Device) => {
