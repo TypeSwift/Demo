@@ -10,9 +10,11 @@
 
 /// An enumeration of TypeScript identifiers generated to be used in Swift code.
 enum TypeSwift {
+  
   // Variables
   case total(_ value: Double)
   case textFieldValue(_ value: String)
+  case switchValue(_ value: Bool)
   
   // Functions
   case updateTotal(_ value: Double)
@@ -25,6 +27,7 @@ enum TypeSwift {
     switch self {
     case .total(let value): return "total.value = \(value)"
     case .textFieldValue(let value): return "textFieldValue.value = `\(value)`"
+    case .switchValue(let value): return "switchValue.value = \(value)"
       
     case .updateTotal(let value): return "updateTotal(\(value))"
     case .updateDeviceDropdown(let device): return "updateDeviceDropdown(Device.\(device))"
@@ -51,6 +54,7 @@ extension TypeSwift {
   enum MessageHandlers {
     case total((Double) -> Void)
     case textFieldValue((String) -> Void)
+    case switchValue((Bool) -> Void)
     
     case updateTotal((Double) -> Void)
     case updateTextField((String) -> Void)
@@ -62,6 +66,7 @@ extension TypeSwift {
       switch self {
       case .total: return "total"
       case .textFieldValue: return "textFieldValue"
+      case .switchValue: return "switchValue"
         
       case .updateTotal: return "updateTotal"
       case .updateTextField: return "updateTextField"
@@ -79,6 +84,10 @@ extension TypeSwift {
         }
       case .textFieldValue(let callback):
         if let value = message.body as? String {
+          callback(value)
+        }
+      case .switchValue(let callback):
+        if let value = message.body as? Bool {
           callback(value)
         }
         

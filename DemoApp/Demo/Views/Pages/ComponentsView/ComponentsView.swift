@@ -27,24 +27,17 @@ struct ComponentsView: View {
           .tsMessageHandler(.textFieldValue { newValue in
             textFieldValue = newValue
           }, manager: manager)
-        /*
-          .tsMessageHandler(.updateTotal { newValue in
-            total = newValue
-          }, manager: manager)
-         
-          .tsMessageHandler(.updateTextField { newValue in
-            textFieldValue = newValue
-          }, manager: manager)
-         */
           .tsMessageHandler(.updateDeviceDropdown { newValue in
             selectedDevice = newValue
           }, manager: manager)
           .tsMessageHandler(.updateOSDropdown { newValue in
             selectedOS = newValue
           }, manager: manager)
-          .tsMessageHandler(.updateSwitch { newValue in
+          .tsMessageHandler(.switchValue {  newValue in
             switchValue = newValue
           }, manager: manager)
+        // TODO: Simplify for 1:1 state vars
+        // .sync(.switchValue, $switchValue)
         
         ScrollView {
           VStack(alignment: .leading, spacing: 16) {
@@ -88,7 +81,7 @@ struct ComponentsView: View {
             ComponentSection(header: "Switch") {
               LargeSwitch(state: $switchValue)
                 .onChange(of: switchValue) {
-                  manager.ts(.updateSwitch(switchValue))
+                  manager.ts(.switchValue(switchValue)) //manager.ts(.updateSwitch(switchValue))
                 }
             }
           }

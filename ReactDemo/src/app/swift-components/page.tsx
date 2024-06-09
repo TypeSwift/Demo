@@ -37,7 +37,7 @@ const SplitComponentsView: FC = () => {
   const [selectedDevice, setSelectedDevice] = useState<Device>();
   const [selectedOS, setSelectedOS] = useState<OperatingSystemType>();
   //const [textFieldValue, setTextFieldValue] = useState<string>('');
-  const [switchValue, setSwitchValue] = useState<boolean>(false);
+  //const [switchValue, setSwitchValue] = useState<boolean>(false);
 
   const [total, setTotal] = useExposeState<number>(0, 'total');
   //const [selectedDevice, setSelectedDevice] = useExposeState<Device>('selectedDevice');
@@ -45,6 +45,10 @@ const SplitComponentsView: FC = () => {
   const [textFieldValue, setTextFieldValue] = useExposeState<string>(
     '',
     'textFieldValue'
+  );
+  const [switchValue, setSwitchValue] = useExposeState<boolean>(
+    true,
+    'switchValue'
   );
 
   useEffect(() => {
@@ -58,10 +62,6 @@ const SplitComponentsView: FC = () => {
       postOSDropdown(selectedOS);
     }
   }, [selectedOS]);
-
-  useEffect(() => {
-    postSwitch(switchValue);
-  }, [switchValue]);
 
   const postDeviceDropdown = (value: Device) => {
     handlers.updateDeviceDropdown.postMessage(JSON.stringify(value));
@@ -125,7 +125,6 @@ const SplitComponentsView: FC = () => {
 
   const updateSwitch = (state: boolean) => {
     setSwitchValue(state);
-    postSwitch(state);
   };
 
   useExposeType(exposedTypes);
