@@ -10,8 +10,8 @@ import SwiftUI
 struct ComponentsView: View {
   let manager: ObservableWebViewManager
   
-  @State private var textFieldValue: String = ""
   @State private var total: Double = 0
+  @State private var textFieldValue: String = ""
   @State private var selectedDevice: TypeSwift.Device = .Phone
   @State private var selectedOS: TypeSwift.OperatingSystems = .iOS
   @State private var switchValue: Bool = true
