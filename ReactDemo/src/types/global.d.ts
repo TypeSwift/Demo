@@ -7,7 +7,17 @@ export type AllHandlers = ComponentHandlers;
 declare global {
   interface Window {
     webkit: {
+      messageHandlers;
+    };
+  }
+}
+
+/*
+declare global {
+  interface Window {
+    webkit: {
       messageHandlers: AllHandlers;
     };
   }
 }
+*/

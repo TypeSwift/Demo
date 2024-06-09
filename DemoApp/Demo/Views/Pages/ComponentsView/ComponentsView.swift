@@ -10,8 +10,8 @@ import SwiftUI
 struct ComponentsView: View {
   let manager: ObservableWebViewManager
   
-  @State private var textFieldValue: String = ""
   @State private var total: Double = 0
+  @State private var textFieldValue: String = ""
   @State private var selectedDevice: TypeSwift.Device = .Phone
   @State private var selectedOS: TypeSwift.OperatingSystems = .iOS
   @State private var switchValue: Bool = true
@@ -21,19 +21,19 @@ struct ComponentsView: View {
       HStack(spacing: 0) {
         ObservableWebView(manager: manager)
           .frame(width: geometry.size.width / 2)
-          .tsMessageHandler(.updateTotal { newValue in
+          .tsMessageHandler(.total { newValue in
             total = newValue
           }, manager: manager)
-          .tsMessageHandler(.updateTextField { newValue in
+          .tsMessageHandler(.textFieldValue { newValue in
             textFieldValue = newValue
           }, manager: manager)
-          .tsMessageHandler(.updateDeviceDropdown { newValue in
+          .tsMessageHandler(.selectedDevice { newValue in
             selectedDevice = newValue
           }, manager: manager)
-          .tsMessageHandler(.updateOSDropdown { newValue in
+          .tsMessageHandler(.selectedOS { newValue in
             selectedOS = newValue
           }, manager: manager)
-          .tsMessageHandler(.updateSwitch { newValue in
+          .tsMessageHandler(.switchValue {  newValue in
             switchValue = newValue
           }, manager: manager)
         
@@ -44,10 +44,10 @@ struct ComponentsView: View {
             ComponentSection(header: "Buttons") {
               HStack {
                 PrimaryButton("+1", foreground: .white, background: .blue) {
-                  manager.ts(.updateTotal(total + 1))
+                  manager.ts(.total(total + 1))
                 }
                 PrimaryButton("-1", foreground: .white, background: .red) {
-                  manager.ts(.updateTotal(total - 1))
+                  manager.ts(.total(total - 1))
                 }
                 Text("\(total, specifier: "%.0f")")
                   .font(.system(size: 14, weight: .medium))
@@ -57,7 +57,7 @@ struct ComponentsView: View {
             ComponentSection(header: "TextField") {
               PrimaryTextField(text: $textFieldValue)
                 .onChange(of: textFieldValue) {
-                  manager.ts(.updateTextField(textFieldValue))
+                  manager.ts(.textFieldValue(textFieldValue))
                 }
             }
             
@@ -66,12 +66,12 @@ struct ComponentsView: View {
                 MonoSubheader("enum")
                 EnumDropdownMenu(selection: $selectedDevice)
                   .onChange(of: selectedDevice) {
-                    manager.ts(.updateDeviceDropdown(selectedDevice))
+                    manager.ts(.selectedDevice(selectedDevice))
                   }
                 MonoSubheader("const")
                 EnumDropdownMenu(selection: $selectedOS)
                   .onChange(of: selectedOS) {
-                    manager.ts(.updateOSDropdown(selectedOS))
+                    manager.ts(.selectedOS(selectedOS))
                   }
               }
             }
@@ -79,7 +79,7 @@ struct ComponentsView: View {
             ComponentSection(header: "Switch") {
               LargeSwitch(state: $switchValue)
                 .onChange(of: switchValue) {
-                  manager.ts(.updateSwitch(switchValue))
+                  manager.ts(.switchValue(switchValue))
                 }
             }
           }
