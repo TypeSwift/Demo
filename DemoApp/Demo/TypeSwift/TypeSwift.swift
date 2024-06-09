@@ -11,10 +11,12 @@
 /// An enumeration of TypeScript identifiers generated to be used in Swift code.
 enum TypeSwift {
   
-  // Variables
+  // State Variables
   case total(_ value: Double)
   case textFieldValue(_ value: String)
   case switchValue(_ value: Bool)
+  case selectedDevice(_ device: Device)
+  case selectedOS(_ os: OperatingSystems)
   
   // Functions
   case updateTotal(_ value: Double)
@@ -28,7 +30,10 @@ enum TypeSwift {
     case .total(let value): return "total.value = \(value)"
     case .textFieldValue(let value): return "textFieldValue.value = `\(value)`"
     case .switchValue(let value): return "switchValue.value = \(value)"
-      
+    case .selectedDevice(let device): return "selectedDevice.value = Device.\(device)"
+    case .selectedOS(let os): return "selectedOS.value = OperatingSystems.\(os)"
+    
+      // Functions
     case .updateTotal(let value): return "updateTotal(\(value))"
     case .updateDeviceDropdown(let device): return "updateDeviceDropdown(Device.\(device))"
     case .updateOSDropdown(let os): return "updateOSDropdown(OperatingSystems.\(os))"
@@ -55,7 +60,10 @@ extension TypeSwift {
     case total((Double) -> Void)
     case textFieldValue((String) -> Void)
     case switchValue((Bool) -> Void)
+    case selectedDevice((Device) -> Void)
+    case selectedOS((OperatingSystems) -> Void)
     
+    // Static Functions
     case updateTotal((Double) -> Void)
     case updateTextField((String) -> Void)
     case updateDeviceDropdown((Device) -> Void)
@@ -67,7 +75,10 @@ extension TypeSwift {
       case .total: return "total"
       case .textFieldValue: return "textFieldValue"
       case .switchValue: return "switchValue"
-        
+      case .selectedDevice: return "selectedDevice"
+      case .selectedOS: return "selectedOS"
+      
+        // Static Functions
       case .updateTotal: return "updateTotal"
       case .updateTextField: return "updateTextField"
       case .updateDeviceDropdown: return "updateDeviceDropdown"
@@ -86,23 +97,33 @@ extension TypeSwift {
         if let value = message.body as? String {
           callback(value)
         }
+      case .selectedDevice(let callback):
+        if let deviceData = message.body as? String,
+           let device = Device(rawValue: deviceData) {
+          callback(device)
+        }
+      case .selectedOS(let callback):
+        if let osData = message.body as? String,
+           let os = OperatingSystems(rawValue: osData) {
+          callback(os)
+        }
       case .switchValue(let callback):
         if let value = message.body as? Bool {
           callback(value)
         }
         
+      // Static Functions
       case .updateTotal(let callback):
         if let value = message.body as? Double {
           callback(value)
         }
       case .updateTextField(let callback):
-        if let text = message.body as? String {
-          callback(text)
+        if let value = message.body as? String {
+          callback(value)
         }
       case .updateDeviceDropdown(let callback):
         if let deviceData = message.body as? String,
-           let data = deviceData.data(using: .utf8),
-           let device = try? JSONDecoder().decode(Device.self, from: data) {
+           let device = Device(rawValue: deviceData) {
           callback(device)
         }
       case .updateOSDropdown(let callback):
@@ -111,8 +132,8 @@ extension TypeSwift {
           callback(os)
         }
       case .updateSwitch(let callback):
-        if let switchValue = message.body as? Bool {
-          callback(switchValue)
+        if let value = message.body as? Bool {
+          callback(value)
         }
       }
     }

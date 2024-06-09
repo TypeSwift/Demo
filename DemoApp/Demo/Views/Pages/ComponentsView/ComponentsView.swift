@@ -27,17 +27,17 @@ struct ComponentsView: View {
           .tsMessageHandler(.textFieldValue { newValue in
             textFieldValue = newValue
           }, manager: manager)
-          .tsMessageHandler(.updateDeviceDropdown { newValue in
+          .tsMessageHandler(.selectedDevice { newValue in
             selectedDevice = newValue
           }, manager: manager)
-          .tsMessageHandler(.updateOSDropdown { newValue in
+          .tsMessageHandler(.selectedOS { newValue in
             selectedOS = newValue
           }, manager: manager)
           .tsMessageHandler(.switchValue {  newValue in
             switchValue = newValue
           }, manager: manager)
         // TODO: Simplify for 1:1 state vars
-        // .sync(.switchValue, $switchValue)
+        // .sync(.switchValue, $switchValue, manager)
         
         ScrollView {
           VStack(alignment: .leading, spacing: 16) {
@@ -46,10 +46,10 @@ struct ComponentsView: View {
             ComponentSection(header: "Buttons") {
               HStack {
                 PrimaryButton("+1", foreground: .white, background: .blue) {
-                  manager.ts(.total(total + 1))//manager.ts(.updateTotal(total + 1))
+                  manager.ts(.total(total + 1))
                 }
                 PrimaryButton("-1", foreground: .white, background: .red) {
-                  manager.ts(.total(total - 1))//manager.ts(.updateTotal(total - 1))
+                  manager.ts(.total(total - 1))
                 }
                 Text("\(total, specifier: "%.0f")")
                   .font(.system(size: 14, weight: .medium))
@@ -59,7 +59,7 @@ struct ComponentsView: View {
             ComponentSection(header: "TextField") {
               PrimaryTextField(text: $textFieldValue)
                 .onChange(of: textFieldValue) {
-                  manager.ts(.textFieldValue(textFieldValue))//manager.ts(.updateTextField(textFieldValue))
+                  manager.ts(.textFieldValue(textFieldValue))
                 }
             }
             
@@ -68,12 +68,12 @@ struct ComponentsView: View {
                 MonoSubheader("enum")
                 EnumDropdownMenu(selection: $selectedDevice)
                   .onChange(of: selectedDevice) {
-                    manager.ts(.updateDeviceDropdown(selectedDevice))
+                    manager.ts(.selectedDevice(selectedDevice))
                   }
                 MonoSubheader("const")
                 EnumDropdownMenu(selection: $selectedOS)
                   .onChange(of: selectedOS) {
-                    manager.ts(.updateOSDropdown(selectedOS))
+                    manager.ts(.selectedOS(selectedOS))
                   }
               }
             }
@@ -81,7 +81,7 @@ struct ComponentsView: View {
             ComponentSection(header: "Switch") {
               LargeSwitch(state: $switchValue)
                 .onChange(of: switchValue) {
-                  manager.ts(.switchValue(switchValue)) //manager.ts(.updateSwitch(switchValue))
+                  manager.ts(.switchValue(switchValue))
                 }
             }
           }
