@@ -46,6 +46,8 @@ import WebKit
 
 extension TypeSwift {
   enum MessageHandlers {
+    case total((Double) -> Void)
+    
     case updateTotal((Double) -> Void)
     case updateTextField((String) -> Void)
     case updateDeviceDropdown((Device) -> Void)
@@ -54,6 +56,8 @@ extension TypeSwift {
     
     var name: String {
       switch self {
+      case .total: return "total"
+        
       case .updateTotal: return "updateTotal"
       case .updateTextField: return "updateTextField"
       case .updateDeviceDropdown: return "updateDeviceDropdown"
@@ -64,6 +68,11 @@ extension TypeSwift {
     
     func handle(message: WKScriptMessage) {
       switch self {
+      case .total(let callback):
+        if let value = message.body as? Double {
+          callback(value)
+        }
+        
       case .updateTotal(let callback):
         if let value = message.body as? Double {
           callback(value)
