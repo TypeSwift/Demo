@@ -1,35 +1,19 @@
 'use client';
 import { FC, useState, useEffect, ChangeEvent, use } from 'react';
-import DropdownMenu from '../../components/menus';
-import { BlueButton, RedButton } from '../../components/buttons';
-import InputTextField from '../../components/inputs';
-import Switch from '../../components/switches';
-import ComponentSection from '../../components/sections';
-import useExpose from '../../hooks/useExpose';
-import useExposeType from '../../hooks/useExposeType';
+import DropdownMenu from '@/components/menus';
+import { BlueButton, RedButton } from '@/components/buttons';
+import InputTextField from '@/components/inputs';
+import Switch from '@/components/switches';
+import ComponentSection from '@/components/sections';
+import useExpose from '@/hooks/useExpose';
+import useExposeType from '@/hooks/useExposeType';
 import useExposeState from '@/hooks/useExposeState';
-
-export enum Device {
-  Phone = 'Phone',
-  Pad = 'Pad',
-  Mac = 'Mac',
-  TV = 'TV',
-  Vision = 'Vision',
-}
-
-export type OperatingSystemType = keyof typeof OperatingSystems;
-const OperatingSystems = {
-  iOS: 'iOS',
-  iPadOS: 'iPadOS',
-  macOS: 'macOS',
-  tvOS: 'tvOS',
-  visionOS: 'visionOS',
-} as const;
-
-export const exposedTypes = {
+import {
+  exposedTypes,
   Device,
   OperatingSystems,
-};
+  OperatingSystemType,
+} from '@/types/Platforms';
 
 const SplitComponentsView: FC = () => {
   const [total, setTotal] = useExposeState<number>(0, 'total');

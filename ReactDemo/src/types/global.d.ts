@@ -1,8 +1,4 @@
-import { ComponentHandlers } from './componentHandlers';
-
 export {};
-
-export type AllHandlers = ComponentHandlers;
 
 declare global {
   interface Window {
@@ -12,12 +8,7 @@ declare global {
   }
 }
 
-/*
-declare global {
-  interface Window {
-    webkit: {
-      messageHandlers: AllHandlers;
-    };
-  }
-}
-*/
+export const exposedTypes = {
+  Device,
+  OperatingSystems,
+};
