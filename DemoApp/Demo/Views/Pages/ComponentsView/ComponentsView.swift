@@ -24,14 +24,18 @@ struct ComponentsView: View {
           .tsMessageHandler(.total { newValue in
             total = newValue
           }, manager: manager)
+          .tsMessageHandler(.textFieldValue { newValue in
+            textFieldValue = newValue
+          }, manager: manager)
         /*
           .tsMessageHandler(.updateTotal { newValue in
             total = newValue
           }, manager: manager)
-         */
+         
           .tsMessageHandler(.updateTextField { newValue in
             textFieldValue = newValue
           }, manager: manager)
+         */
           .tsMessageHandler(.updateDeviceDropdown { newValue in
             selectedDevice = newValue
           }, manager: manager)
@@ -62,7 +66,7 @@ struct ComponentsView: View {
             ComponentSection(header: "TextField") {
               PrimaryTextField(text: $textFieldValue)
                 .onChange(of: textFieldValue) {
-                  manager.ts(.updateTextField(textFieldValue))
+                  manager.ts(.textFieldValue(textFieldValue))//manager.ts(.updateTextField(textFieldValue))
                 }
             }
             

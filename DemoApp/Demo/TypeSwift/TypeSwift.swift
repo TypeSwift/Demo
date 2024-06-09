@@ -12,6 +12,7 @@
 enum TypeSwift {
   // Variables
   case total(_ value: Double)
+  case textFieldValue(_ value: String)
   
   // Functions
   case updateTotal(_ value: Double)
@@ -23,6 +24,8 @@ enum TypeSwift {
   var jsString: String {
     switch self {
     case .total(let value): return "total.value = \(value)"
+    case .textFieldValue(let value): return "textFieldValue.value = `\(value)`"
+      
     case .updateTotal(let value): return "updateTotal(\(value))"
     case .updateDeviceDropdown(let device): return "updateDeviceDropdown(Device.\(device))"
     case .updateOSDropdown(let os): return "updateOSDropdown(OperatingSystems.\(os))"
@@ -47,6 +50,7 @@ import WebKit
 extension TypeSwift {
   enum MessageHandlers {
     case total((Double) -> Void)
+    case textFieldValue((String) -> Void)
     
     case updateTotal((Double) -> Void)
     case updateTextField((String) -> Void)
@@ -57,6 +61,7 @@ extension TypeSwift {
     var name: String {
       switch self {
       case .total: return "total"
+      case .textFieldValue: return "textFieldValue"
         
       case .updateTotal: return "updateTotal"
       case .updateTextField: return "updateTextField"
@@ -70,6 +75,10 @@ extension TypeSwift {
       switch self {
       case .total(let callback):
         if let value = message.body as? Double {
+          callback(value)
+        }
+      case .textFieldValue(let callback):
+        if let value = message.body as? String {
           callback(value)
         }
         

@@ -34,16 +34,18 @@ export const exposedTypes = {
 
 const SplitComponentsView: FC = () => {
   //const [total, setTotal] = useState(0);
-  const [total, setTotal] = useExposeState<number>(0, 'total');
-
   const [selectedDevice, setSelectedDevice] = useState<Device>();
   const [selectedOS, setSelectedOS] = useState<OperatingSystemType>();
-  const [textFieldValue, setTextFieldValue] = useState<string>('');
+  //const [textFieldValue, setTextFieldValue] = useState<string>('');
   const [switchValue, setSwitchValue] = useState<boolean>(false);
 
-  useEffect(() => {
-    postTotal(total);
-  }, [total]);
+  const [total, setTotal] = useExposeState<number>(0, 'total');
+  //const [selectedDevice, setSelectedDevice] = useExposeState<Device>('selectedDevice');
+
+  const [textFieldValue, setTextFieldValue] = useExposeState<string>(
+    '',
+    'textFieldValue'
+  );
 
   useEffect(() => {
     if (selectedDevice) {
@@ -60,16 +62,6 @@ const SplitComponentsView: FC = () => {
   useEffect(() => {
     postSwitch(switchValue);
   }, [switchValue]);
-
-  const postTotal = (value: number) => {
-    if (handlers.updateTotal) {
-      handlers.updateTotal.postMessage(value);
-    }
-  };
-
-  const postTextField = (value: string) => {
-    handlers.updateTextField.postMessage(value);
-  };
 
   const postDeviceDropdown = (value: Device) => {
     handlers.updateDeviceDropdown.postMessage(JSON.stringify(value));
@@ -105,7 +97,6 @@ const SplitComponentsView: FC = () => {
   const handleTextFieldChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
     setTextFieldValue(newValue);
-    postTextField(newValue);
   };
 
   const handleSwitchChange = () => {
@@ -130,7 +121,6 @@ const SplitComponentsView: FC = () => {
 
   const updateTextField = (text: string) => {
     setTextFieldValue(text);
-    postTextField(text);
   };
 
   const updateSwitch = (state: boolean) => {
