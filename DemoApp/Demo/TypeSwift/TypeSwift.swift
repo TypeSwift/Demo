@@ -10,6 +10,8 @@
 
 /// An enumeration of TypeScript identifiers generated to be used in Swift code.
 enum TypeSwift {
+  // Variables
+  case total(_ value: Double)
   
   // Functions
   case updateTotal(_ value: Double)
@@ -20,6 +22,7 @@ enum TypeSwift {
   
   var jsString: String {
     switch self {
+    case .total(let value): return "total.value = \(value)"
     case .updateTotal(let value): return "updateTotal(\(value))"
     case .updateDeviceDropdown(let device): return "updateDeviceDropdown(Device.\(device))"
     case .updateOSDropdown(let os): return "updateOSDropdown(OperatingSystems.\(os))"

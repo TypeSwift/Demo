@@ -44,10 +44,10 @@ struct ComponentsView: View {
             ComponentSection(header: "Buttons") {
               HStack {
                 PrimaryButton("+1", foreground: .white, background: .blue) {
-                  manager.ts(.updateTotal(total + 1))
+                  manager.ts(.total(total + 1))//manager.ts(.updateTotal(total + 1))
                 }
                 PrimaryButton("-1", foreground: .white, background: .red) {
-                  manager.ts(.updateTotal(total - 1))
+                  manager.ts(.total(total - 1))//manager.ts(.updateTotal(total - 1))
                 }
                 Text("\(total, specifier: "%.0f")")
                   .font(.system(size: 14, weight: .medium))

@@ -8,6 +8,7 @@ import ComponentSection from '../../components/sections';
 import useExpose from '../../hooks/useExpose';
 import useExposeType from '../../hooks/useExposeType';
 import { handlers } from '@/utils/handlers';
+import useExposeState from '@/hooks/useExposeState';
 
 export enum Device {
   Phone = 'Phone',
@@ -32,7 +33,9 @@ export const exposedTypes = {
 };
 
 const SplitComponentsView: FC = () => {
-  const [total, setTotal] = useState(0);
+  //const [total, setTotal] = useState(0);
+  const [total, setTotal] = useExposeState<number>(0, 'total');
+
   const [selectedDevice, setSelectedDevice] = useState<Device>();
   const [selectedOS, setSelectedOS] = useState<OperatingSystemType>();
   const [textFieldValue, setTextFieldValue] = useState<string>('');
