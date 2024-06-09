@@ -36,8 +36,6 @@ struct ComponentsView: View {
           .tsMessageHandler(.switchValue {  newValue in
             switchValue = newValue
           }, manager: manager)
-        // TODO: Simplify for 1:1 state vars
-        // .sync(.switchValue, $switchValue, manager)
         
         ScrollView {
           VStack(alignment: .leading, spacing: 16) {
